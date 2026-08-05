@@ -1,20 +1,7 @@
-// Mobile drawer toggle
-const burger = document.getElementById('burger');
-const drawer = document.getElementById('drawer');
-burger.addEventListener('click', () => drawer.classList.toggle('open'));
-drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => drawer.classList.remove('open')));
+'use client';
+import { useEffect } from 'react';
 
-// Menu modal
-const modal = document.getElementById('menuModal');
-const openBtn = document.getElementById('openMenu');
-function openModal() { modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
-function closeModal() { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
-openBtn && openBtn.addEventListener('click', openModal);
-modal.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closeModal));
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
-
-// ---------- i18n FR / EN ----------
-const EN = {
+const EN: Record<string, string> = {
   'nav.services': 'Services', 'nav.how': 'How it works', 'nav.rewards': 'Rewards', 'nav.counter': 'The counter',
   'nav.open': 'Open 24/7', 'nav.login': 'Log in', 'nav.download': 'Download', 'drawer.download': 'Download the app',
   'hero.eyebrow': '🫧 The connected laundromat',
@@ -50,7 +37,7 @@ const EN = {
   'foot.tag': 'The connected laundromat that smells of good coffee. We wash, you live.',
   'foot.open': 'Open 24/7', 'foot.hServices': 'Services', 'foot.hHelp': 'Help',
   'foot.s1': 'Wash &amp; dry', 'foot.s2': 'The counter', 'foot.s3': 'Rewards', 'foot.s4': 'The app',
-  'foot.b1': 'Our locations', 'foot.b2': 'Eco pledge', 'foot.b3': "We're hiring", 'foot.b4': 'Press',
+  'foot.b1': 'Our locations', 'foot.b2': 'Eco pledge', 'foot.b3': 'Join us', 'foot.b4': 'Press',
   'foot.h1': 'Support', 'foot.h2': 'FAQ', 'foot.h3': 'Contact', 'foot.h4': 'Terms',
   'foot.bottom': '© 2026 Wash&amp;eat · The connected laundromat.',
   'modal.eyebrow': 'The counter', 'modal.title': 'Our menu',
@@ -60,30 +47,61 @@ const EN = {
   'm.jus': 'Fresh juice of the day<small>Orange · apple · seasonal</small>', 'm.limo': 'Craft lemonade', 'm.eau': 'Infused water',
   'm.cookie': 'Homemade cookie<small>Chocolate chips</small>', 'm.tartine': 'Avocado toast<small>Country bread, poached egg</small>', 'm.muffin': 'Muffin of the day',
 };
-// snapshot original FR (from HTML) so we can switch back
-const FR = {};
-document.querySelectorAll('[data-i18n]').forEach(el => { FR[el.getAttribute('data-i18n')] = el.innerHTML; });
 
-function setLang(lang) {
-  const dict = lang === 'en' ? EN : FR;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const k = el.getAttribute('data-i18n');
-    if (dict[k] != null) el.innerHTML = dict[k];
-  });
-  document.documentElement.lang = lang;
-  document.querySelectorAll('.lang-toggle .lt-opt').forEach(o => o.classList.toggle('active', o.dataset.lang === lang));
-  try { localStorage.setItem('washeat-lang', lang); } catch (e) {}
+export default function Enhancers() {
+  useEffect(() => {
+    const $ = (s: string) => document.querySelector(s);
+    const $$ = (s: string) => Array.from(document.querySelectorAll(s));
+
+    // Mobile drawer
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('drawer');
+    const onBurger = () => drawer?.classList.toggle('open');
+    burger?.addEventListener('click', onBurger);
+    drawer?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => drawer.classList.remove('open')));
+
+    // Menu modal
+    const modal = document.getElementById('menuModal');
+    const openBtn = document.getElementById('openMenu');
+    const openModal = () => { modal?.classList.add('open'); modal?.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; };
+    const closeModal = () => { modal?.classList.remove('open'); modal?.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; };
+    openBtn?.addEventListener('click', openModal);
+    modal?.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closeModal));
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape' && modal?.classList.contains('open')) closeModal(); };
+    document.addEventListener('keydown', onKey);
+
+    // i18n
+    const FR: Record<string, string> = {};
+    $$('[data-i18n]').forEach(el => { FR[el.getAttribute('data-i18n')!] = (el as HTMLElement).innerHTML; });
+    const setLang = (lang: string) => {
+      const dict = lang === 'en' ? EN : FR;
+      $$('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n')!;
+        if (dict[k] != null) (el as HTMLElement).innerHTML = dict[k];
+      });
+      document.documentElement.lang = lang;
+      $$('.lang-toggle .lt-opt').forEach(o => o.classList.toggle('active', (o as HTMLElement).dataset.lang === lang));
+      try { localStorage.setItem('washeat-lang', lang); } catch {}
+    };
+    $$('.lang-toggle .lt-opt').forEach(o => o.addEventListener('click', () => setLang((o as HTMLElement).dataset.lang!)));
+    let saved = 'fr';
+    try { saved = localStorage.getItem('washeat-lang') || 'fr'; } catch {}
+    setLang(saved);
+
+    // Progress ring
+    const prog = $('.ring .prog') as SVGCircleElement | null;
+    if (prog) {
+      const circ = 2 * Math.PI * 63;
+      prog.style.strokeDasharray = String(circ);
+      prog.style.transition = 'stroke-dashoffset 1.2s ease';
+      requestAnimationFrame(() => { prog.style.strokeDashoffset = String(circ * (1 - 0.62)); });
+    }
+
+    return () => {
+      burger?.removeEventListener('click', onBurger);
+      openBtn?.removeEventListener('click', openModal);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, []);
+  return null;
 }
-document.querySelectorAll('.lang-toggle .lt-opt').forEach(o => o.addEventListener('click', () => setLang(o.dataset.lang)));
-setLang((() => { try { return localStorage.getItem('washeat-lang') || 'fr'; } catch (e) { return 'fr'; } })());
-
-// Animate progress ring on load (38 of ~63 min -> ~40% remaining shown)
-window.addEventListener('load', () => {
-  const prog = document.querySelector('.ring .prog');
-  if (!prog) return;
-  const circ = 2 * Math.PI * 63;      // ~396
-  const pct = 0.62;                    // filled portion of cycle
-  prog.style.strokeDasharray = circ;
-  prog.style.transition = 'stroke-dashoffset 1.2s ease';
-  requestAnimationFrame(() => { prog.style.strokeDashoffset = circ * (1 - pct); });
-});

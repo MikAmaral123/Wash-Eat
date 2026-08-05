@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="200" viewBox="0 0 720 200">
+  <rect width="720" height="200" fill="#FFFFFF"/>
+  <g font-family="'Space Mono', monospace" font-size="14" fill="#2E241C">
+    <g transform="translate(24,28)">
+      <rect width="120" height="90" rx="16" fill="#F5502B"/>
+      <text x="0" y="118">Suds coral</text><text x="0" y="138" fill="#75695C">#F5502B</text>
+    </g>
+    <g transform="translate(164,28)">
+      <rect width="120" height="90" rx="16" fill="#3AA06A"/>
+      <text x="0" y="118">Fresh green</text><text x="0" y="138" fill="#75695C">#3AA06A</text>
+    </g>
+    <g transform="translate(304,28)">
+      <rect width="120" height="90" rx="16" fill="#E08A3C"/>
+      <text x="0" y="118">Terracotta</text><text x="0" y="138" fill="#75695C">#E08A3C</text>
+    </g>
+    <g transform="translate(444,28)">
+      <rect width="120" height="90" rx="16" fill="#EE9A2E"/>
+      <text x="0" y="118">Zest amber</text><text x="0" y="138" fill="#75695C">#EE9A2E</text>
+    </g>
+    <g transform="translate(584,28)">
+      <rect width="120" height="90" rx="16" fill="#FBEFE1" stroke="#EBD9C4"/>
+      <text x="0" y="118">Cream paper</text><text x="0" y="138" fill="#75695C">#FBEFE1</text>
+    </g>
+  </g>
+</svg>

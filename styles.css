@@ -1,17 +1,17 @@
-/* Wash&eat — landing page. Brand tokens from washeat-design skill essentials. */
+/* Wash&eat - landing page. Brand tokens from washeat-design skill essentials. */
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
 :root {
   /* Palette */
-  --coral: #F5502B;        /* Suds — primary, warmer */
+  --coral: #F5502B;        /* Suds - primary, warmer */
   --coral-dark: #D83E1D;
   --coral-soft: #FBDDCE;
-  --green: #3AA06A;        /* Fresh — eco / done, warmer */
+  --green: #3AA06A;        /* Fresh - eco / done, warmer */
   --green-dark: #2A8A57;
   --green-soft: #E1EFD9;
-  --sky: #E08A3C;          /* Bubble — reworked to warm terracotta */
+  --sky: #E08A3C;          /* Bubble - reworked to warm terracotta */
   --sky-soft: #FBE3CC;
-  --amber: #EE9A2E;        /* Zest — café */
+  --amber: #EE9A2E;        /* Zest - café */
   --amber-soft: #FBE6C6;
 
   --paper: #FBEFE1;        /* warm cream page, more amber */

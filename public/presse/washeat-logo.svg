@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="140" viewBox="0 0 440 140">
+  <rect width="440" height="140" fill="#FBEFE1"/>
+  <circle cx="70" cy="70" r="26" fill="none" stroke="#F5502B" stroke-width="9"/>
+  <text x="118" y="90" font-family="'Baloo 2', 'Trebuchet MS', sans-serif" font-size="58" font-weight="800" fill="#2E241C">Wash<tspan fill="#F5502B">&amp;</tspan>eat</text>
+</svg>

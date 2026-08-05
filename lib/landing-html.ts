@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wash&eat — La laverie connectée</title>
-<meta name="description" content="Lancez une machine depuis votre téléphone, prenez un café, profitez du wi-fi. La laverie connectée, ouverte 24h/24.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='11' fill='none' stroke='%23F5502B' stroke-width='5'/></svg>">
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
+export const landingHtml = `
 
 <!-- NAV -->
 <header class="nav">
@@ -26,8 +16,8 @@
       <button class="lang-toggle" id="langToggle" aria-label="Langue / Language">
         <span class="lt-opt active" data-lang="fr">FR</span><span class="lt-opt" data-lang="en">EN</span>
       </button>
-      <a href="#" class="link-login" data-i18n="nav.login">Se connecter</a>
-      <a href="#telecharger" class="btn btn-primary btn-sm">
+      <a class="link-login" href="/login" data-i18n="nav.login">Se connecter</a>
+      <a href="/signup" class="btn btn-primary btn-sm">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
         <span data-i18n="nav.download">Télécharger</span></a>
     </div>
@@ -41,7 +31,7 @@
   <a href="#comment" data-i18n="nav.how">Comment ça marche</a>
   <a href="#fidelite" data-i18n="nav.rewards">Fidélité</a>
   <a href="#comptoir" data-i18n="nav.counter">Le comptoir</a>
-  <a href="#telecharger" data-i18n="drawer.download">Télécharger l'appli</a>
+  <a href="/signup" data-i18n="drawer.download">Télécharger l'appli</a>
 </nav>
 
 <!-- HERO -->
@@ -53,7 +43,7 @@
       <h1 data-i18n="hero.title">On lave.<br>On vit.<br><span class="amp">&amp;</span> on se régale.</h1>
       <p class="hero-lead" data-i18n="hero.lead">Lancez une machine depuis votre téléphone, prenez un café, profitez du wi-fi. On vous prévient quand votre linge est prêt. Ouvert jour et nuit.</p>
       <div class="hero-actions">
-        <a href="#telecharger" class="btn btn-primary">
+        <a href="/signup" class="btn btn-primary">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
           <span data-i18n="hero.btnDl">Télécharger l'appli</span></a>
         <a href="#" class="btn btn-ghost">
@@ -230,10 +220,10 @@
       <li><a href="#telecharger" data-i18n="foot.s4">L'appli</a></li>
     </ul></div>
     <div><h5>Wash&amp;eat</h5><ul>
-      <li><a href="#" data-i18n="foot.b1">Nos adresses</a></li>
-      <li><a href="#" data-i18n="foot.b2">Éco-engagement</a></li>
-      <li><a href="#" data-i18n="foot.b3">On recrute</a></li>
-      <li><a href="#" data-i18n="foot.b4">Presse</a></li>
+      <li><a href="#services" data-i18n="foot.b1">Nos adresses</a></li>
+      <li><a href="/eco-engagement" data-i18n="foot.b2">Éco-engagement</a></li>
+      <li><a href="/franchise" data-i18n="foot.b3">Nous rejoindre</a></li>
+      <li><a href="/presse" data-i18n="foot.b4">Presse</a></li>
     </ul></div>
     <div><h5 data-i18n="foot.hHelp">Aide</h5><ul>
       <li><a href="#" data-i18n="foot.h1">Support</a></li>
@@ -280,6 +270,5 @@
   </div>
 </div>
 
-<script src="script.js"></script>
-</body>
-</html>
+
+`;
