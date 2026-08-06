@@ -93,11 +93,11 @@ export const landingHtml = `
       <div class="steps">
         <div class="step">
           <div class="step-ic i-coral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 21v.01M17 21h.01M21 17h.01"/></svg></div>
-          <div><span class="num">01</span><h4 data-i18n="s1t">Scannez ou réservez</h4><p data-i18n="s1d">Scannez le QR code de la machine, ou réservez-la à l'avance depuis l'appli.</p></div>
+          <div><span class="num">01</span><h4 data-i18n="s1t">Installez l'appli</h4><p data-i18n="s1d">Scannez le QR code en laverie pour télécharger l'appli. Elle est indispensable pour lancer une machine.</p></div>
         </div>
         <div class="step">
           <div class="step-ic i-sky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
-          <div><span class="num">02</span><h4 data-i18n="s2t">Lancez &amp; payez sans contact</h4><p data-i18n="s2d">Choisissez votre programme et réglez en deux tapes. Puis détendez-vous.</p></div>
+          <div><span class="num">02</span><h4 data-i18n="s2t">Choisissez &amp; payez sans contact</h4><p data-i18n="s2d">Sélectionnez une machine libre et votre programme depuis l'appli. Réglez en deux tapes, puis détendez-vous.</p></div>
         </div>
         <div class="step">
           <div class="step-ic i-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></div>
@@ -109,8 +109,8 @@ export const landingHtml = `
       <div class="qr-box">
         <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 21v.01M17 21h.01M21 17h.01M14 18v3"/></svg>
       </div>
-      <h4 data-i18n="qr.title">Scannez pour démarrer</h4>
-      <p data-i18n="qr.sub">Sur chaque machine, borne &amp; séchoir</p>
+      <h4 data-i18n="qr.title">Scannez pour installer l'appli</h4>
+      <p data-i18n="qr.sub">Un écran central pilote machines &amp; distributeurs</p>
     </div>
   </div>
 </section>

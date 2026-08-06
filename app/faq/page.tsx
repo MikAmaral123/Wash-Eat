@@ -17,7 +17,8 @@ const CATS: Cat[] = [
     color: 'coral', title: 'Lavage & séchage',
     icon: <svg viewBox="0 0 24 24" {...S}><rect x="4" y="2" width="16" height="20" rx="2" /><circle cx="12" cy="13" r="5" /><path d="M8 6h.01M12 6h.01" /></svg>,
     items: [
-      { q: 'Comment lancer une machine ?', a: 'Scannez le QR code de la machine ou réservez-la depuis l’appli, choisissez votre programme et réglez sans contact. Le cycle démarre immédiatement.' },
+      { q: 'Comment lancer une machine ?', a: 'Tout se fait depuis l’application : choisissez une machine disponible et votre programme, puis payez sans contact. Le cycle démarre à distance, sans rien manipuler sur la machine.' },
+      { q: 'Comment fonctionne l’écran central ?', a: 'Un écran unique en laverie affiche en temps réel l’état de toutes les machines et distributeurs. Il n’y a pas de terminal sur chaque machine : votre application fait office de télécommande.' },
       { q: 'Puis-je réserver une machine à l’avance ?', a: 'Oui, de 5 à 15 minutes avant le lancement selon votre grade fidélité. Si la machine n’est pas activée dans le délai, la réservation s’annule automatiquement et la machine redevient disponible pour les clients sur place.' },
       { q: 'Comment savoir quand mon linge est prêt ?', a: 'Suivez le cycle en direct dans l’appli et recevez une notification dès qu’il est terminé.' },
       { q: 'Combien de temps dure un cycle ?', a: 'Comptez environ 30 à 45 minutes pour un lavage, et 15 minutes par cycle de séchage.' },
@@ -28,7 +29,8 @@ const CATS: Cat[] = [
     color: 'sky', title: 'L’application',
     icon: <svg viewBox="0 0 24 24" {...S}><rect x="5" y="2" width="14" height="20" rx="2" /><path d="M12 18h.01" /></svg>,
     items: [
-      { q: 'Ai-je besoin de l’application ?', a: 'Elle est recommandée pour le suivi, la réservation et la fidélité, mais vous pouvez aussi scanner le QR code directement sur place.' },
+      { q: 'L’application est-elle obligatoire ?', a: 'Oui. C’est elle qui pilote les machines et les distributeurs de la laverie : sans l’appli, impossible de lancer un cycle. Un QR code affiché sur place permet de l’installer en quelques secondes.' },
+      { q: 'À quoi sert le QR code en laverie ?', a: 'Uniquement à télécharger l’application : il renvoie vers l’App Store ou Google Play. Il ne sert pas à lancer une machine.' },
       { q: 'Sur quelles plateformes est-elle disponible ?', a: 'Sur iOS et Android.' },
       { q: 'L’application est-elle gratuite ?', a: 'Oui, le téléchargement et l’utilisation sont gratuits.' },
     ],
