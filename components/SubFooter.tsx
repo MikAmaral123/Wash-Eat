@@ -16,7 +16,7 @@ export default function SubFooter() {
           <li><Link href="/signup">L&apos;appli</Link></li>
         </ul></div>
         <div><h5>Wash&amp;eat</h5><ul>
-          <li><Link href="/#services">Nos adresses</Link></li>
+          <li><Link href="/adresses">Nos adresses</Link></li>
           <li><Link href="/eco-engagement">Éco-engagement</Link></li>
           <li><Link href="/franchise">Nous rejoindre</Link></li>
           <li><Link href="/presse">Presse</Link></li>

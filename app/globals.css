@@ -15,6 +15,36 @@
 .page-hero--sky .pb1 { width: 300px; height: 300px; background: var(--sky-soft); top: -60px; right: 6%; opacity: .7; animation: floaty 16s ease-in-out infinite; }
 .page-hero--sky .pb2 { width: 200px; height: 200px; background: var(--green-soft); bottom: -40px; left: 8%; opacity: .6; animation: floaty2 13s ease-in-out infinite; }
 
+/* Nos adresses / map */
+.adr-layout { display: grid; grid-template-columns: 380px 1fr; gap: 24px; align-items: start; }
+.adr-list { display: grid; gap: 14px; }
+.adr-card { text-align: left; display: flex; gap: 14px; background: var(--card); border: 1.5px solid var(--line); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-sm); cursor: pointer; transition: border-color .15s, box-shadow .15s, transform .15s; font-family: var(--font-body); }
+.adr-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.adr-card.active { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(245,80,43,.15); }
+.adr-pin { width: 44px; height: 44px; flex: 0 0 auto; border-radius: 13px; background: var(--coral-soft); color: var(--coral); display: flex; align-items: center; justify-content: center; }
+.adr-pin svg { width: 22px; height: 22px; }
+.adr-info h3 { font-size: 18px; font-weight: 700; }
+.adr-info p { color: var(--ink-2); font-size: 14px; margin: 4px 0 10px; }
+.adr-hours { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 12.5px; color: var(--green-dark); background: var(--green-soft); padding: 5px 11px; border-radius: 999px; }
+.adr-hours svg { width: 14px; height: 14px; }
+.adr-go { margin-top: 14px; }
+.adr-go svg { width: 16px; height: 16px; }
+.adr-soon { display: flex; align-items: center; gap: 12px; background: var(--paper-2); border: 1px dashed var(--line); border-radius: var(--radius-lg); padding: 16px 18px; color: var(--ink-2); }
+.adr-soon svg { width: 22px; height: 22px; flex: 0 0 auto; color: var(--amber); }
+.adr-soon b { display: block; font-size: 14px; color: var(--ink); }
+.adr-soon span { font-size: 13px; }
+.adr-map { height: 560px; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); z-index: 0; }
+.adr-map .leaflet-container { height: 100%; width: 100%; font-family: var(--font-body); background: var(--paper-2); }
+.map-pin { display: block; width: 26px; height: 26px; background: var(--coral); border: 3px solid #fff; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); box-shadow: 0 4px 10px rgba(42,33,26,.3); }
+.leaflet-popup-content-wrapper { border-radius: 14px; box-shadow: var(--shadow); }
+.leaflet-popup-content { font-size: 13px; line-height: 1.5; margin: 12px 14px; }
+.leaflet-popup-content b { font-family: var(--font-display); font-size: 15px; }
+.leaflet-bar a { color: var(--ink); }
+@media (max-width: 860px) {
+  .adr-layout { grid-template-columns: 1fr; }
+  .adr-map { height: 380px; order: -1; }
+}
+
 /* FAQ */
 .faq-cat { margin-bottom: 34px; }
 .faq-cat-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
