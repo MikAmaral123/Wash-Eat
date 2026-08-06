@@ -194,6 +194,46 @@
 .dash-stat b { font-family: var(--font-display); font-size: 26px; font-weight: 800; display: block; }
 .dash-stat .ds-lbl { color: var(--ink-2); font-size: 13px; }
 
+/* Loyalty panel */
+.loyalty-panel { margin-bottom: 36px; }
+.lp-hero { display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px; background: linear-gradient(150deg, #3AA06A, #2A8A57); color: #fff; border-radius: var(--radius-xl); padding: 26px 28px; box-shadow: var(--shadow); }
+.lp-points { display: flex; align-items: center; gap: 14px; }
+.lp-coin { font-size: 40px; }
+.lp-points b { font-family: var(--font-display); font-size: 40px; font-weight: 800; display: block; line-height: 1; }
+.lp-points span { color: rgba(255,255,255,.85); font-size: 14px; }
+.lp-grade { display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+.lp-grade-badge { align-self: flex-start; background: rgba(255,255,255,.2); font-weight: 700; padding: 6px 14px; border-radius: 999px; font-size: 15px; }
+.lp-bar { height: 8px; background: rgba(255,255,255,.25); border-radius: 999px; overflow: hidden; }
+.lp-bar i { display: block; height: 100%; background: #fff; border-radius: 999px; transition: width .5s; }
+.lp-next { color: rgba(255,255,255,.9); font-size: 13px; font-weight: 600; }
+.lp-perks { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 8px; }
+.lp-perks > div { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow-sm); }
+.lp-perk-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; color: var(--green); }
+.lp-perks p { margin-top: 4px; font-size: 14px; font-weight: 600; }
+.lp-sub { font-family: var(--font-display); font-size: 18px; font-weight: 700; margin: 26px 0 12px; }
+.lp-rewards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.lp-reward { display: flex; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+.lp-reward.locked { opacity: .6; }
+.lp-reward-emoji { font-size: 26px; flex: 0 0 auto; }
+.lp-reward-info { flex: 1; min-width: 0; }
+.lp-reward-info b { display: block; font-size: 14px; }
+.lp-reward-info span { font-family: var(--font-mono); font-weight: 700; color: var(--coral); font-size: 13px; }
+.lp-grades { display: grid; gap: 8px; }
+.lp-grade-row { display: grid; grid-template-columns: 34px 150px 1fr; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; }
+.lp-grade-row.current { border-color: var(--green); box-shadow: 0 0 0 2px rgba(58,160,106,.18); }
+.lp-grade-emoji { font-size: 22px; }
+.lp-grade-meta b { display: block; font-size: 15px; }
+.lp-grade-meta span { font-family: var(--font-mono); font-size: 12px; color: var(--ink-2); }
+.lp-grade-row p { font-size: 13px; color: var(--ink-2); }
+.lp-earn { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.lp-earn-row { display: flex; justify-content: space-between; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 11px 15px; font-size: 14px; }
+.lp-earn-row b { color: var(--green-dark); white-space: nowrap; }
+@media (max-width: 640px) {
+  .lp-hero, .lp-perks, .lp-rewards, .lp-earn { grid-template-columns: 1fr; }
+  .lp-grade-row { grid-template-columns: 30px 1fr; }
+  .lp-grade-row p { grid-column: 1 / -1; }
+}
+
 .settings { display: grid; gap: 18px; }
 .settings-title { font-family: var(--font-display); font-size: 22px; font-weight: 700; margin-bottom: 2px; }
 .setting-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); display: grid; grid-template-columns: 220px 1fr; gap: 24px; }

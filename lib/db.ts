@@ -23,6 +23,9 @@ export type User = {
   first_name: string | null;
   avatar_id: string | null;
   is_admin: boolean;
+  points: number;
+  birthdate: string | null;
+  birthday_bonus_year: number | null;
   created_at: string;
 };
 

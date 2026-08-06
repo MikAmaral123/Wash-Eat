@@ -123,14 +123,14 @@ export const landingHtml = `
       <div class="loyalty">
         <div>
           <span class="eyebrow" data-i18n="loy.eyebrow">Programme fidélité</span>
-          <h2 data-i18n="loy.title">8 lavages = 1 lavage + séchage offert.</h2>
-          <p data-i18n="loy.text">À chaque lavage, un tampon. Au 8ᵉ, votre lavage et votre séchage sont pour nous. Tout se cumule automatiquement dans l'appli.</p>
+          <h2 data-i18n="loy.title">Gagnez des points, montez en grade.</h2>
+          <p data-i18n="loy.text">1 € dépensé = 10 points, sur le lavage comme au comptoir. Échangez-les contre cafés, snacks, séchages et lavages offerts. Plus vous cumulez, plus votre grade débloque d'avantages.</p>
           <a href="#telecharger" class="btn btn-ghost">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
             <span data-i18n="loy.btn">Rejoindre le programme</span></a>
         </div>
         <div class="stamp-card">
-          <div class="stamp-top"><b data-i18n="loy.card">Ma carte de fidélité</b><span class="stamp-count">5 / 8</span></div>
+          <div class="stamp-top"><b data-i18n="loy.card">Ma cagnotte de points</b><span class="stamp-count">480 pts</span></div>
           <div class="stamps">
             <div class="stamp done"><svg viewBox="0 0 40 40" fill="currentColor"><circle cx="20" cy="22" r="8.5"/><circle cx="31" cy="12" r="3.2"/><circle cx="9.5" cy="12.5" r="2.6"/><circle cx="30.5" cy="29" r="2.1"/><circle cx="20" cy="8" r="2.3"/><circle cx="10" cy="29.5" r="1.8"/><circle cx="26" cy="6.5" r="1.2"/><circle cx="16.5" cy="19" r="2.4" fill="#ffffff" opacity=".85"/></svg></div>
             <div class="stamp done"><svg viewBox="0 0 40 40" fill="currentColor"><circle cx="20" cy="22" r="8.5"/><circle cx="31" cy="12" r="3.2"/><circle cx="9.5" cy="12.5" r="2.6"/><circle cx="30.5" cy="29" r="2.1"/><circle cx="20" cy="8" r="2.3"/><circle cx="10" cy="29.5" r="1.8"/><circle cx="26" cy="6.5" r="1.2"/><circle cx="16.5" cy="19" r="2.4" fill="#ffffff" opacity=".85"/></svg></div>
@@ -141,7 +141,7 @@ export const landingHtml = `
             <div class="stamp empty"></div>
             <div class="stamp reward"><svg viewBox="0 0 40 40" fill="currentColor"><path d="M20 5c1 4.5 2.2 6.1 4 7.9 1.8 1.8 3.4 3 7.9 4-4.5 1-6.1 2.2-7.9 4-1.8 1.8-3 3.4-4 7.9-1-4.5-2.2-6.1-4-7.9-1.8-1.8-3.4-3-7.9-4 4.5-1 6.1-2.2 7.9-4 1.8-1.8 3-3.4 4-7.9Z"/><circle cx="32.5" cy="9" r="2.3"/><circle cx="8.5" cy="30" r="1.8"/><circle cx="31" cy="30" r="1.3"/></svg></div>
           </div>
-          <div class="stamp-foot" data-i18n="loy.foot">🎁 Plus que 3 lavages avant votre récompense</div>
+          <div class="stamp-foot" data-i18n="loy.foot">🏆 Snacker · Gourmet · Chef · Foodie VIP</div>
         </div>
       </div>
     </div>

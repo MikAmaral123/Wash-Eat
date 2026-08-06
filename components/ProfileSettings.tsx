@@ -10,19 +10,21 @@ function Note({ flash }: { flash: Flash }) {
   return <div className={flash.type === 'ok' ? 'form-note ok' : 'form-note err'}>{flash.msg}</div>;
 }
 
-export default function ProfileSettings({ firstName, phone }: { firstName: string; phone: string }) {
+export default function ProfileSettings({ firstName, phone, birthdate }: { firstName: string; phone: string; birthdate: string | null }) {
   const router = useRouter();
 
-  // First name
+  // First name + birthdate
   const [name, setName] = useState(firstName);
+  const [bd, setBd] = useState(birthdate ? String(birthdate).slice(0, 10) : '');
   const [nameFlash, setNameFlash] = useState<Flash>(null);
   const [nameBusy, setNameBusy] = useState(false);
+  const profileChanged = name.trim() !== firstName || bd !== (birthdate ? String(birthdate).slice(0, 10) : '');
   async function saveName(e: React.FormEvent) {
     e.preventDefault(); setNameBusy(true); setNameFlash(null);
     try {
       const res = await fetch('/api/account/profile', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstName: name.trim() }),
+        body: JSON.stringify({ firstName: name.trim(), birthdate: bd }),
       });
       const d = await res.json();
       if (!res.ok) { setNameFlash({ type: 'err', msg: d.error || 'Échec.' }); return; }
@@ -102,13 +104,16 @@ export default function ProfileSettings({ firstName, phone }: { firstName: strin
     <div className="settings">
       <h2 className="settings-title">Paramètres</h2>
 
-      {/* Prénom */}
+      {/* Profil */}
       <form className="setting-card" onSubmit={saveName}>
-        <div className="sc-head"><h3>Prénom</h3><span>Le nom qu&apos;on affiche.</span></div>
+        <div className="sc-head"><h3>Profil</h3><span>Prénom & anniversaire.</span></div>
         <div className="sc-body">
-          <div className="field"><input value={name} onChange={(e) => setName(e.target.value)} placeholder="Votre prénom" /></div>
+          <div className="grid-2">
+            <div className="field"><label>Prénom</label><input value={name} onChange={(e) => setName(e.target.value)} placeholder="Votre prénom" /></div>
+            <div className="field"><label>Date de naissance</label><input type="date" max={new Date().toISOString().slice(0, 10)} value={bd} onChange={(e) => setBd(e.target.value)} /></div>
+          </div>
           <Note flash={nameFlash} />
-          <button className="btn btn-primary btn-sm" disabled={nameBusy || name.trim() === firstName || !name.trim()}>
+          <button className="btn btn-primary btn-sm" disabled={nameBusy || !profileChanged || !name.trim()}>
             {nameBusy ? 'Enregistrement…' : 'Enregistrer'}
           </button>
         </div>

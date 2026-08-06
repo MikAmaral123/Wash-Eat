@@ -10,7 +10,7 @@ const STEPS = [
   { label: 'Téléphone', sub: 'Votre numéro' },
   { label: 'Vérification', sub: 'Code reçu par SMS' },
   { label: 'Mot de passe', sub: 'Sécurisez le compte' },
-  { label: 'Prénom', sub: 'Comment vous appeler' },
+  { label: 'Profil', sub: 'Prénom & anniversaire' },
   { label: 'Avatar', sub: 'Choisissez votre style' },
 ];
 
@@ -23,6 +23,7 @@ export default function SignupPage() {
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [firstName, setFirstName] = useState('');
+  const [birthdate, setBirthdate] = useState('');
   const [avatarId, setAvatarId] = useState<string | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -71,6 +72,8 @@ export default function SignupPage() {
     }
     if (step === 3) {
       if (firstName.trim().length < 1) { setError('Entrez votre prénom.'); return; }
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(birthdate)) { setError('Entrez votre date de naissance.'); return; }
+      if (birthdate > new Date().toISOString().slice(0, 10)) { setError('Date de naissance invalide.'); return; }
       setStep(4); return;
     }
     if (step === 4) {
@@ -91,7 +94,7 @@ export default function SignupPage() {
     try {
       const res = await fetch('/api/auth/register', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone, password, firstName: firstName.trim(), avatarId }),
+        body: JSON.stringify({ phone, password, firstName: firstName.trim(), avatarId, birthdate }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -187,13 +190,20 @@ export default function SignupPage() {
           )}
 
           {step === 3 && (
-            <div className="field">
-              <label htmlFor="firstName">Votre prénom</label>
-              <input id="firstName" type="text" autoComplete="given-name" placeholder="Camille"
-                value={firstName} autoFocus onChange={(e) => setFirstName(e.target.value)}
-                onKeyDown={(e) => { if (e.key === 'Enter') next(); }} />
-              <p className="hint">C&apos;est comme ça qu&apos;on vous dira bonjour.</p>
-            </div>
+            <>
+              <div className="field">
+                <label htmlFor="firstName">Votre prénom</label>
+                <input id="firstName" type="text" autoComplete="given-name" placeholder="Camille"
+                  value={firstName} autoFocus onChange={(e) => setFirstName(e.target.value)} />
+              </div>
+              <div className="field">
+                <label htmlFor="birthdate">Date de naissance</label>
+                <input id="birthdate" type="date" max={new Date().toISOString().slice(0, 10)}
+                  value={birthdate} onChange={(e) => setBirthdate(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') next(); }} />
+                <p className="hint">🎂 On vous offre +100 points chaque année pour votre anniversaire.</p>
+              </div>
+            </>
           )}
 
           {step === 4 && (

@@ -3,7 +3,10 @@ import { z } from 'zod';
 import { sql } from '@/lib/db';
 import { getCurrentUser } from '@/lib/auth';
 
-const schema = z.object({ firstName: z.string().trim().min(1).max(60) });
+const schema = z.object({
+  firstName: z.string().trim().min(1).max(60),
+  birthdate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().or(z.literal('')),
+});
 
 export async function POST(req: Request) {
   const user = await getCurrentUser();
@@ -18,6 +21,8 @@ export async function POST(req: Request) {
   const parsed = schema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: 'Prénom invalide' }, { status: 400 });
 
-  await sql`update app_users set first_name = ${parsed.data.firstName} where id = ${user.id}`;
+  const bd = parsed.data.birthdate && parsed.data.birthdate.length ? parsed.data.birthdate : null;
+  await sql`update app_users set first_name = ${parsed.data.firstName},
+            birthdate = coalesce(${bd}, birthdate) where id = ${user.id}`;
   return NextResponse.json({ ok: true });
 }
