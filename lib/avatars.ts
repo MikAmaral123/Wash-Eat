@@ -18,6 +18,10 @@ function build(
     top,
     backgroundColor: bg,
     radius: '50',
+    // Force a joyful face on every avatar (no sad/angry random rolls)
+    mouth: 'smile,twinkle',
+    eyes: 'happy,wink',
+    eyebrows: 'default,raisedExcited',
   });
   const url = `https://api.dicebear.com/9.x/avataaars/svg?${p.toString()}&${extra}`;
   return { id, gender, url };
