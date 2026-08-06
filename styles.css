@@ -207,6 +207,20 @@ p { margin: 0; }
 .loyalty-blob.lb2 { width: 170px; height: 170px; background: rgba(255,255,255,.07); top: -50px; right: -30px; animation: floaty2 14s ease-in-out infinite; }
 .loyalty-blob.lb3 { width: 120px; height: 120px; background: rgba(46,138,87,.35); top: 40%; left: -40px; animation: floaty 20s ease-in-out infinite reverse; }
 .stamp-card { background: #fff; color: var(--ink); border-radius: var(--radius-lg); padding: 26px; box-shadow: var(--shadow-lg); }
+/* Points/grade card (landing loyalty) */
+.pc-badge { background: var(--green-soft); color: var(--green-dark); font-weight: 700; font-size: 13px; padding: 5px 12px; border-radius: 999px; white-space: nowrap; }
+.pc-balance { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.pc-coin { font-size: 34px; }
+.pc-balance b { font-family: var(--font-display); font-size: 40px; font-weight: 800; line-height: 1; display: block; }
+.pc-balance small { color: var(--ink-2); font-size: 13px; }
+.pc-bar { height: 8px; background: var(--green-soft); border-radius: 999px; overflow: hidden; }
+.pc-bar i { display: block; height: 100%; background: var(--green); border-radius: 999px; }
+.pc-next { font-size: 12.5px; color: var(--ink-2); font-weight: 600; margin: 8px 0 16px; }
+.pc-rewards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pc-reward { display: flex; align-items: center; gap: 10px; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 11px 12px; }
+.pc-emoji { font-size: 22px; }
+.pc-reward b { display: block; font-size: 13px; }
+.pc-reward small { color: var(--coral); font-weight: 700; font-family: var(--font-mono); font-size: 12px; }
 .stamp-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
 .stamp-top b { font-size: 16px; }
 .stamp-count { font-family: var(--font-mono); font-weight: 700; color: var(--green); background: var(--green-soft); padding: 4px 10px; border-radius: 999px; font-size: 13px; }
