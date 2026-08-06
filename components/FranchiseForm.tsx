@@ -1,12 +1,15 @@
 'use client';
 import { useState } from 'react';
+import { formatPhone } from '@/lib/phone';
 
 export default function FranchiseForm() {
   const [f, setF] = useState({ fullName: '', email: '', phone: '', city: '', message: '' });
   const [state, setState] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle');
   const [error, setError] = useState('');
-  const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setF({ ...f, [k]: e.target.value });
+  const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const v = k === 'phone' ? formatPhone(e.target.value) : e.target.value;
+    setF({ ...f, [k]: v });
+  };
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
