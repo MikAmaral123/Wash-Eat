@@ -1,15 +1,13 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getCurrentUser } from '@/lib/auth';
-import { avatarUrl } from '@/lib/avatars';
+import AccountAvatar from '@/components/AccountAvatar';
 
 export const dynamic = 'force-dynamic';
 
 export default async function AccountPage() {
   const user = await getCurrentUser();
   if (!user) redirect('/login');
-
-  const img = avatarUrl(user.avatar_id);
 
   return (
     <main className="auth-wrap" style={{ alignItems: 'flex-start' }}>
@@ -21,12 +19,7 @@ export default async function AccountPage() {
         </Link>
 
         <div className="account-top">
-          {img && (
-            <div className="big">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img} alt="Avatar" />
-            </div>
-          )}
+          <AccountAvatar initialAvatarId={user.avatar_id} />
           <div>
             <h1>Bonjour {user.first_name} 👋</h1>
             <p>{user.phone}</p>

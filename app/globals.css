@@ -175,6 +175,25 @@
 .account-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 @media (max-width: 560px) { .account-grid { grid-template-columns: 1fr; } }
 
+/* Account avatar (click to change) */
+.avatar-edit {
+  position: relative; width: 84px; height: 84px; flex: 0 0 auto; padding: 0; cursor: pointer;
+  border-radius: 50%; border: 4px solid #fff; background: none; box-shadow: var(--shadow);
+  transition: transform .15s; overflow: visible;
+}
+.avatar-edit img { width: 100%; height: 100%; border-radius: 50%; display: block; }
+.avatar-edit:hover { transform: translateY(-2px); }
+.avatar-edit-badge {
+  position: absolute; right: -3px; bottom: -3px; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--coral); color: #fff; display: flex; align-items: center; justify-content: center;
+  border: 2px solid #fff; box-shadow: var(--shadow-sm); transition: transform .15s;
+}
+.avatar-edit-badge svg { width: 14px; height: 14px; }
+.avatar-edit:hover .avatar-edit-badge { transform: scale(1.12); }
+.avatar-modal { max-width: 460px; text-align: left; }
+.avatar-modal h3 { font-family: var(--font-display); font-size: 24px; font-weight: 700; margin: 0 0 4px; }
+.avatar-modal-sub { color: var(--ink-2); font-size: 14px; margin: 0 0 18px; }
+
 /* ---------- Auth split (fullscreen horizontal) ---------- */
 .auth-split { min-height: 100dvh; display: grid; grid-template-columns: 1.05fr 1fr; background: var(--paper); }
 
