@@ -223,8 +223,8 @@ export const landingHtml = `
       <li><a href="/presse" data-i18n="foot.b4">Presse</a></li>
     </ul></div>
     <div><h5 data-i18n="foot.hHelp">Aide</h5><ul>
-      <li><a href="#" data-i18n="foot.h1">Support</a></li>
-      <li><a href="#" data-i18n="foot.h2">FAQ</a></li>
+      <li><a href="/faq" data-i18n="foot.h1">Support</a></li>
+      <li><a href="/faq" data-i18n="foot.h2">FAQ</a></li>
       <li><a href="#" data-i18n="foot.h3">Contact</a></li>
       <li><a href="#" data-i18n="foot.h4">CGU</a></li>
     </ul></div>

@@ -22,8 +22,8 @@ export default function SubFooter() {
           <li><Link href="/presse">Presse</Link></li>
         </ul></div>
         <div><h5>Aide</h5><ul>
-          <li><Link href="/#comment">Support</Link></li>
-          <li><Link href="/#comment">FAQ</Link></li>
+          <li><Link href="/faq">Support</Link></li>
+          <li><Link href="/faq">FAQ</Link></li>
           <li><Link href="/presse">Contact</Link></li>
           <li><Link href="/#services">CGU</Link></li>
         </ul></div>
