@@ -175,6 +175,30 @@
 .account-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 @media (max-width: 560px) { .account-grid { grid-template-columns: 1fr; } }
 
+/* ---------- Admin panel ---------- */
+.admin-wrap { min-height: 100dvh; background: var(--paper); padding: 40px 24px 80px; }
+.admin-inner { max-width: 1080px; margin: 0 auto; }
+.admin-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 28px; }
+.admin-head h1 { font-family: var(--font-display); font-size: 32px; font-weight: 700; margin: 10px 0 4px; }
+.admin-sub { color: var(--ink-2); }
+.admin-badge { background: var(--amber-soft); color: #a5680f; font-weight: 700; font-size: 13px; padding: 8px 14px; border-radius: 999px; white-space: nowrap; }
+.admin-table-wrap { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow-x: auto; }
+.admin-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 760px; }
+.admin-table th { text-align: left; font-family: var(--font-body); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-2); padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.admin-table td { padding: 15px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.admin-table tr:last-child td { border-bottom: 0; }
+.admin-table tbody tr:hover { background: var(--paper); }
+.admin-table a { color: var(--coral); font-weight: 600; }
+.admin-table .nowrap { white-space: nowrap; }
+.admin-table .muted { color: var(--ink-2); font-size: 13px; }
+.admin-table .msg { max-width: 320px; color: var(--ink-2); }
+.admin-empty { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 60px 24px; text-align: center; box-shadow: var(--shadow-sm); }
+.admin-empty .ae-ic { width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 18px; background: var(--coral-soft); color: var(--coral); display: flex; align-items: center; justify-content: center; }
+.admin-empty .ae-ic svg { width: 30px; height: 30px; }
+.admin-empty h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.admin-empty p { color: var(--ink-2); }
+.admin-empty a { color: var(--coral); font-weight: 600; }
+
 /* Account avatar (click to change) */
 .avatar-edit {
   position: relative; width: 84px; height: 84px; flex: 0 0 auto; padding: 0; cursor: pointer;

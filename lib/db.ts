@@ -22,5 +22,16 @@ export type User = {
   phone: string;
   first_name: string | null;
   avatar_id: string | null;
+  is_admin: boolean;
+  created_at: string;
+};
+
+export type FranchiseLead = {
+  id: string;
+  full_name: string;
+  email: string;
+  phone: string | null;
+  city: string | null;
+  message: string | null;
   created_at: string;
 };

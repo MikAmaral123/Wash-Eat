@@ -50,7 +50,7 @@ export async function getCurrentUser(): Promise<User | null> {
     const { payload } = await jwtVerify(token, secret);
     const id = payload.sub as string;
     const rows = (await sql`
-      select id, phone, first_name, avatar_id, created_at
+      select id, phone, first_name, avatar_id, is_admin, created_at
       from app_users where id = ${id} limit 1
     `) as User[];
     return rows[0] ?? null;

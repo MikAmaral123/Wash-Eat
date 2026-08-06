@@ -34,6 +34,9 @@ export default async function AccountPage() {
 
         <div className="account-actions">
           <Link href="/" className="btn btn-ghost">Retour au site</Link>
+          {user.is_admin && (
+            <Link href="/admin" className="btn btn-ghost">🔑 Espace admin</Link>
+          )}
           <form action="/api/auth/logout" method="post">
             <button className="btn btn-primary" type="submit">Se déconnecter</button>
           </form>
