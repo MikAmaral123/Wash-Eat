@@ -8,6 +8,7 @@ import { formatPhone } from '@/lib/phone';
 
 const STEPS = [
   { label: 'Téléphone', sub: 'Votre numéro' },
+  { label: 'Vérification', sub: 'Code reçu par SMS' },
   { label: 'Mot de passe', sub: 'Sécurisez le compte' },
   { label: 'Prénom', sub: 'Comment vous appeler' },
   { label: 'Avatar', sub: 'Choisissez votre style' },
@@ -17,6 +18,8 @@ export default function SignupPage() {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const [phone, setPhone] = useState('');
+  const [code, setCode] = useState('');
+  const [devCode, setDevCode] = useState<string | null>(null);
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -24,36 +27,70 @@ export default function SignupPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  function validStep(): string | null {
-    if (step === 0) {
-      const digits = phone.replace(/\D/g, '');
-      if (digits.length < 9) return 'Entrez un numéro de téléphone valide.';
-    }
-    if (step === 1) {
-      if (password.length < 6) return 'Mot de passe : 6 caractères minimum.';
-      if (password !== confirm) return 'Les mots de passe ne correspondent pas.';
-    }
-    if (step === 2 && firstName.trim().length < 1) return 'Entrez votre prénom.';
-    if (step === 3 && !avatarId) return 'Choisissez un avatar.';
-    return null;
+  async function sendCode() {
+    const res = await fetch('/api/otp/send', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone, purpose: 'signup' }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Envoi du code impossible.');
+    setDevCode(data.devCode ?? null);
   }
 
-  function next() {
-    const err = validStep();
-    if (err) { setError(err); return; }
+  async function next() {
     setError('');
-    if (step < STEPS.length - 1) setStep(step + 1);
-    else submit();
+    // Step 0: phone -> send code
+    if (step === 0) {
+      if (phone.replace(/\D/g, '').length < 9) { setError('Entrez un numéro de téléphone valide.'); return; }
+      setLoading(true);
+      try { await sendCode(); setStep(1); }
+      catch (e) { setError((e as Error).message); }
+      finally { setLoading(false); }
+      return;
+    }
+    // Step 1: verify code
+    if (step === 1) {
+      if (!/^\d{6}$/.test(code.trim())) { setError('Entrez le code à 6 chiffres.'); return; }
+      setLoading(true);
+      try {
+        const res = await fetch('/api/otp/verify', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone, purpose: 'signup', code: code.trim() }),
+        });
+        const data = await res.json();
+        if (!res.ok) { setError(data.error || 'Code incorrect.'); return; }
+        setStep(2);
+      } catch { setError('Erreur réseau. Réessayez.'); }
+      finally { setLoading(false); }
+      return;
+    }
+    if (step === 2) {
+      if (password.length < 6) { setError('Mot de passe : 6 caractères minimum.'); return; }
+      if (password !== confirm) { setError('Les mots de passe ne correspondent pas.'); return; }
+      setStep(3); return;
+    }
+    if (step === 3) {
+      if (firstName.trim().length < 1) { setError('Entrez votre prénom.'); return; }
+      setStep(4); return;
+    }
+    if (step === 4) {
+      if (!avatarId) { setError('Choisissez un avatar.'); return; }
+      submit();
+    }
   }
+
   function back() { setError(''); setStep(Math.max(0, step - 1)); }
 
+  async function resend() {
+    setError(''); setLoading(true);
+    try { await sendCode(); } catch (e) { setError((e as Error).message); } finally { setLoading(false); }
+  }
+
   async function submit() {
-    setLoading(true);
-    setError('');
+    setLoading(true); setError('');
     try {
       const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone, password, firstName: firstName.trim(), avatarId }),
       });
       const data = await res.json();
@@ -64,11 +101,8 @@ export default function SignupPage() {
       }
       router.push('/account');
       router.refresh();
-    } catch {
-      setError('Erreur réseau. Réessayez.');
-    } finally {
-      setLoading(false);
-    }
+    } catch { setError('Erreur réseau. Réessayez.'); }
+    finally { setLoading(false); }
   }
 
   const pct = ((step + 1) / STEPS.length) * 100;
@@ -119,11 +153,23 @@ export default function SignupPage() {
                 value={phone} autoFocus
                 onChange={(e) => setPhone(formatPhone(e.target.value))}
                 onKeyDown={(e) => { if (e.key === 'Enter') next(); }} />
-              <p className="hint">On l&apos;utilise pour vous prévenir quand votre linge est prêt.</p>
+              <p className="hint">On vous envoie un code à 6 chiffres pour vérifier ce numéro.</p>
             </div>
           )}
 
           {step === 1 && (
+            <div className="field">
+              <label htmlFor="code">Code de vérification</label>
+              <input id="code" inputMode="numeric" autoComplete="one-time-code" maxLength={6} placeholder="123456"
+                className="code-input" value={code} autoFocus
+                onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                onKeyDown={(e) => { if (e.key === 'Enter') next(); }} />
+              <p className="hint">Envoyé au {phone}. <button type="button" className="linklike" onClick={resend} disabled={loading}>Renvoyer le code</button></p>
+              {devCode && <div className="dev-code">Mode démo · votre code : <b>{devCode}</b></div>}
+            </div>
+          )}
+
+          {step === 2 && (
             <>
               <div className="field">
                 <label htmlFor="password">Mot de passe</label>
@@ -140,7 +186,7 @@ export default function SignupPage() {
             </>
           )}
 
-          {step === 2 && (
+          {step === 3 && (
             <div className="field">
               <label htmlFor="firstName">Votre prénom</label>
               <input id="firstName" type="text" autoComplete="given-name" placeholder="Camille"
@@ -150,7 +196,7 @@ export default function SignupPage() {
             </div>
           )}
 
-          {step === 3 && (
+          {step === 4 && (
             <>
               {avatarId && (
                 <div className="avatar-preview">
@@ -167,7 +213,7 @@ export default function SignupPage() {
               <button type="button" className="btn btn-ghost" onClick={back} disabled={loading}>Retour</button>
             )}
             <button type="button" className="btn btn-primary" onClick={next} disabled={loading}>
-              {loading ? 'Création…' : step === STEPS.length - 1 ? 'Créer mon compte' : 'Continuer'}
+              {loading ? '…' : step === 0 ? 'Recevoir le code' : step === STEPS.length - 1 ? 'Créer mon compte' : 'Continuer'}
             </button>
           </div>
 

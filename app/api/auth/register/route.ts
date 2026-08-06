@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { sql } from '@/lib/db';
 import { hashPassword, createSession, normalizePhone } from '@/lib/auth';
+import { isVerified, consume } from '@/lib/otp';
 import { AVATARS } from '@/lib/avatars';
 
 const schema = z.object({
@@ -30,6 +31,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Ce numéro est déjà utilisé.' }, { status: 409 });
   }
 
+  if (!(await isVerified(phone, 'signup'))) {
+    return NextResponse.json({ error: 'Numéro non vérifié.' }, { status: 400 });
+  }
+
   const password_hash = await hashPassword(password);
   const rows = (await sql`
     insert into app_users (phone, password_hash, first_name, avatar_id)
@@ -37,6 +42,7 @@ export async function POST(req: Request) {
     returning id
   `) as { id: string }[];
 
+  await consume(phone, 'signup');
   await createSession(rows[0].id);
   return NextResponse.json({ ok: true });
 }

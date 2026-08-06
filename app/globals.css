@@ -175,6 +175,54 @@
 .account-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 @media (max-width: 560px) { .account-grid { grid-template-columns: 1fr; } }
 
+/* ---------- Dashboard ---------- */
+.dash { min-height: 100dvh; background: var(--paper); }
+.dash-topbar { position: sticky; top: 0; z-index: 20; background: rgba(251,244,236,.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.dash-topbar-inner { max-width: 900px; margin: 0 auto; padding: 0 24px; height: 66px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.dash-topbar .brand { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 800; font-size: 20px; }
+.dash-topbar .brand .porthole { width: 20px; height: 20px; border-radius: 50%; border: 3px solid var(--coral); }
+.dash-topbar .brand .amp { color: var(--coral); }
+.dash-topbar-actions { display: flex; align-items: center; gap: 10px; }
+.dash-inner { max-width: 900px; margin: 0 auto; padding: 34px 24px 80px; }
+.dash-hero { display: flex; align-items: center; gap: 18px; margin-bottom: 28px; }
+.dash-hero h1 { font-family: var(--font-display); font-size: 30px; font-weight: 700; }
+.dash-phone { color: var(--ink-2); font-family: var(--font-mono); font-size: 15px; margin-top: 2px; }
+.dash-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 36px; }
+.dash-stat { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-sm); }
+.dash-stat .ds-ic { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+.dash-stat .ds-ic svg { width: 20px; height: 20px; }
+.dash-stat b { font-family: var(--font-display); font-size: 26px; font-weight: 800; display: block; }
+.dash-stat .ds-lbl { color: var(--ink-2); font-size: 13px; }
+
+.settings { display: grid; gap: 18px; }
+.settings-title { font-family: var(--font-display); font-size: 22px; font-weight: 700; margin-bottom: 2px; }
+.setting-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); display: grid; grid-template-columns: 220px 1fr; gap: 24px; }
+.setting-card .sc-head h3 { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+.setting-card .sc-head span { color: var(--ink-2); font-size: 13.5px; }
+.sc-body .field { margin-bottom: 12px; }
+.sc-body label { display: block; font-weight: 700; font-size: 12.5px; margin-bottom: 6px; color: var(--ink); }
+.sc-body input { width: 100%; font-family: var(--font-body); font-size: 15px; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--paper); outline: none; transition: border-color .15s, box-shadow .15s; }
+.sc-body input:focus { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(245,80,43,.12); }
+.sc-body .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sc-actions { display: flex; gap: 10px; }
+.phone-current { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.phone-val { font-family: var(--font-mono); font-weight: 700; font-size: 16px; }
+.form-note { font-weight: 600; font-size: 13.5px; padding: 9px 12px; border-radius: 10px; margin-bottom: 12px; }
+.form-note.ok { background: var(--green-soft); color: var(--green-dark); }
+.form-note.err { background: var(--coral-soft); color: var(--coral-dark); }
+.code-input { letter-spacing: .5em; font-family: var(--font-mono); font-size: 22px; font-weight: 700; text-align: center; }
+.dev-code { background: var(--amber-soft); color: #a5680f; font-size: 13.5px; padding: 10px 14px; border-radius: 10px; margin-bottom: 12px; }
+.dev-code b { font-family: var(--font-mono); letter-spacing: .1em; }
+.linklike { background: none; border: 0; padding: 0; color: var(--coral); font-weight: 700; cursor: pointer; font-family: var(--font-body); font-size: inherit; }
+.linklike:disabled { opacity: .5; cursor: default; }
+
+@media (max-width: 640px) {
+  .dash-stats { grid-template-columns: 1fr; }
+  .setting-card { grid-template-columns: 1fr; gap: 14px; }
+  .sc-body .grid-2 { grid-template-columns: 1fr; }
+  .dash-topbar-actions .btn:not(.btn-primary) { display: none; }
+}
+
 /* ---------- Admin panel ---------- */
 .admin-wrap { min-height: 100dvh; background: var(--paper); padding: 40px 24px 80px; }
 .admin-inner { max-width: 1080px; margin: 0 auto; }
