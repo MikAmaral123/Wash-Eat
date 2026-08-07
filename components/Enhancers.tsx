@@ -1,10 +1,11 @@
 'use client';
 import { useEffect } from 'react';
+import { svgIcon } from '@/lib/icons';
 
 const EN: Record<string, string> = {
   'nav.services': 'Services', 'nav.how': 'How it works', 'nav.rewards': 'Rewards', 'nav.counter': 'The counter',
   'nav.open': 'Open 24/7', 'nav.login': 'Log in', 'nav.download': 'Download', 'drawer.download': 'Download the app',
-  'hero.eyebrow': '🫧 The connected laundromat',
+  'hero.eyebrow': `${svgIcon('droplets', 'eb-ic')} The connected laundromat`,
   'hero.title': 'We wash.<br>You live.<br><span class="amp">&amp;</span> you treat yourself.',
   'hero.lead': "Start a machine from your phone, grab a coffee, enjoy the free wi-fi. We ping you when your laundry's done. Open day and night.",
   'hero.btnDl': 'Download the app', 'hero.btnFind': 'Find a laundromat',
@@ -25,7 +26,7 @@ const EN: Record<string, string> = {
   'qr.title': 'Scan to install the app', 'qr.sub': 'One central screen runs machines &amp; vending',
   'loy.eyebrow': 'Loyalty program', 'loy.title': 'Earn points, level up your grade.',
   'loy.text': 'Spend €1, get 10 points — on laundry and at the counter. Redeem them for free coffees, snacks, dries and washes. The more you earn, the more your grade unlocks.',
-  'loy.btn': 'Join the program', 'loy.card': 'My points balance', 'loy.foot': '🏆 Snacker · Gourmet · Chef · Foodie VIP',
+  'loy.btn': 'Join the program', 'loy.card': 'My points balance', 'loy.foot': `${svgIcon('trophy', 'eb-ic')} Snacker · Gourmet · Chef · Foodie VIP`,
   'mi1': 'Flat white', 'mi2': 'Fresh juice', 'mi3': 'Homemade cookie', 'mi4': 'Avocado toast',
   'cafe.eyebrow': 'The counter &amp; living space', 'cafe.title': 'Coffee, a cosy corner, wi-fi.',
   'cafe.lead': 'Locally roasted coffee, drink and snack vending any time, a big table, outlets and free wi-fi. A lounge to wait comfortably while the machine does the rest.',

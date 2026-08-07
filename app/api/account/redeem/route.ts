@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { sql } from '@/lib/db';
-import { getCurrentUser } from '@/lib/auth';
+import { authUser } from '@/lib/auth-request';
 import { REWARDS, rewardByKey } from '@/lib/loyalty';
 
 const schema = z.object({ rewardKey: z.enum(REWARDS.map((r) => r.key) as [string, ...string[]]) });
 
 export async function POST(req: Request) {
-  const user = await getCurrentUser();
+  const user = await authUser(req);
   if (!user) return NextResponse.json({ error: 'Non connecté' }, { status: 401 });
 
   let body: unknown;

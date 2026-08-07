@@ -246,6 +246,20 @@
 .dash-head-info h1 { font-family: var(--font-display); font-size: 26px; font-weight: 700; }
 .dash-grade-chip { flex: 0 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; font-weight: 700; font-size: 13.5px; box-shadow: var(--shadow-sm); }
 
+/* Icônes SVG (taille par défaut = 1em, alignée au texte) */
+.we-ic { width: 1em; height: 1em; flex: 0 0 auto; display: inline-block; vertical-align: -0.14em; }
+.lp-coin .we-ic { width: 26px; height: 26px; vertical-align: middle; }
+.lp-reward-emoji .we-ic, .lp-grade-emoji .we-ic { width: 22px; height: 22px; vertical-align: middle; }
+.lp-sub .we-ic { width: 18px; height: 18px; color: var(--coral); }
+.lp-earn-ic { color: var(--coral); }
+.gb-emoji .we-ic { width: 15px; height: 15px; vertical-align: middle; }
+.admin-badge-ic { width: 15px; height: 15px; }
+.pc-coin .we-ic { width: 24px; height: 24px; vertical-align: middle; }
+.pc-emoji .we-ic { width: 20px; height: 20px; vertical-align: middle; }
+.pc-ic { width: 15px; height: 15px; }
+.eb-ic { width: 15px; height: 15px; }
+.eyebrow .we-ic { color: inherit; }
+
 /* Grade badge (effets croissants par grade) */
 .grade-badge { position: relative; display: inline-flex; align-items: center; gap: 7px; margin-top: 8px; padding: 6px 13px; border-radius: 999px; font-weight: 800; font-size: 13px; letter-spacing: .2px; overflow: hidden; isolation: isolate; }
 .grade-badge > * { position: relative; z-index: 2; }

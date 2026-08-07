@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { sql } from '@/lib/db';
-import { verifyPassword, createSession, normalizePhone } from '@/lib/auth';
+import { verifyPassword, createSession, signSessionToken, normalizePhone } from '@/lib/auth';
 
 const schema = z.object({ phone: z.string().min(6), password: z.string().min(1) });
 
@@ -26,5 +26,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Numéro ou mot de passe incorrect.' }, { status: 401 });
   }
   await createSession(user.id);
-  return NextResponse.json({ ok: true });
+  // Also return the token so native clients (mobile app) can use the
+  // bearer path; web ignores this field and relies on the cookie.
+  const token = await signSessionToken(user.id);
+  return NextResponse.json({ ok: true, token });
 }

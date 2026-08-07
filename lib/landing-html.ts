@@ -1,3 +1,5 @@
+import { svgIcon } from './icons';
+
 export const landingHtml = `
 
 <!-- NAV -->
@@ -39,7 +41,7 @@ export const landingHtml = `
   <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span>
   <div class="container hero-grid">
     <div>
-      <span class="eyebrow" style="color:var(--coral)" data-i18n="hero.eyebrow">🫧 La laverie connectée</span>
+      <span class="eyebrow" style="color:var(--coral)" data-i18n="hero.eyebrow">${svgIcon('droplets', 'eb-ic')} La laverie connectée</span>
       <h1 data-i18n="hero.title">On lave.<br>On vit.<br><span class="amp">&amp;</span> on se régale.</h1>
       <p class="hero-lead" data-i18n="hero.lead">Lancez une machine depuis votre téléphone, prenez un café, profitez du wi-fi. On vous prévient quand votre linge est prêt. Ouvert jour et nuit.</p>
       <div class="hero-actions">
@@ -130,15 +132,15 @@ export const landingHtml = `
             <span data-i18n="loy.btn">Rejoindre le programme</span></a>
         </div>
         <div class="stamp-card points-card">
-          <div class="stamp-top"><b data-i18n="loy.card">Ma cagnotte de points</b><span class="pc-badge">🥐 Gourmet</span></div>
-          <div class="pc-balance"><span class="pc-coin">🪙</span><div><b>480</b><small>points Wash&amp;eat</small></div></div>
+          <div class="stamp-top"><b data-i18n="loy.card">Ma cagnotte de points</b><span class="pc-badge">${svgIcon('croissant', 'pc-ic')} Gourmet</span></div>
+          <div class="pc-balance"><span class="pc-coin">${svgIcon('coins')}</span><div><b>480</b><small>points Wash&amp;eat</small></div></div>
           <div class="pc-bar"><i style="width:64%"></i></div>
-          <div class="pc-next">220 pts avant 👨‍🍳 Chef</div>
+          <div class="pc-next">220 pts avant ${svgIcon('chef-hat', 'pc-ic')} Chef</div>
           <div class="pc-rewards">
-            <div class="pc-reward"><span class="pc-emoji">☕</span><div><b>Boisson offerte</b><small>150 pts</small></div></div>
-            <div class="pc-reward"><span class="pc-emoji">🧺</span><div><b>Lavage offert</b><small>800 pts</small></div></div>
+            <div class="pc-reward"><span class="pc-emoji">${svgIcon('coffee')}</span><div><b>Boisson offerte</b><small>150 pts</small></div></div>
+            <div class="pc-reward"><span class="pc-emoji">${svgIcon('washer')}</span><div><b>Lavage offert</b><small>800 pts</small></div></div>
           </div>
-          <div class="stamp-foot" data-i18n="loy.foot">🏆 Snacker · Gourmet · Chef · Foodie VIP</div>
+          <div class="stamp-foot" data-i18n="loy.foot">${svgIcon('trophy', 'eb-ic')} Snacker · Gourmet · Chef · Foodie VIP</div>
         </div>
       </div>
     </div>

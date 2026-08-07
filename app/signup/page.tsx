@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import AvatarPicker from '@/components/AvatarPicker';
+import Icon from '@/components/Icon';
 import { avatarUrl } from '@/lib/avatars';
 import { formatPhone } from '@/lib/phone';
 
@@ -201,7 +202,7 @@ export default function SignupPage() {
                 <input id="birthdate" type="date" max={new Date().toISOString().slice(0, 10)}
                   value={birthdate} onChange={(e) => setBirthdate(e.target.value)}
                   onKeyDown={(e) => { if (e.key === 'Enter') next(); }} />
-                <p className="hint">🎂 On vous offre +100 points chaque année pour votre anniversaire.</p>
+                <p className="hint"><Icon name="cake" /> On vous offre +100 points chaque année pour votre anniversaire.</p>
               </div>
             </>
           )}

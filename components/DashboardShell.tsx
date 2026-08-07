@@ -3,6 +3,7 @@ import { useState } from 'react';
 import AccountAvatar from '@/components/AccountAvatar';
 import ProfileSettings from '@/components/ProfileSettings';
 import LoyaltyPanel from '@/components/LoyaltyPanel';
+import Icon from '@/components/Icon';
 import { gradeFor, nextGrade, gradeProgress } from '@/lib/loyalty';
 
 type Tab = 'apercu' | 'fidelite' | 'profil';
@@ -29,9 +30,9 @@ export default function DashboardShell({
       <header className="dash-head">
         <AccountAvatar initialAvatarId={avatarId} />
         <div className="dash-head-info">
-          <h1>Bonjour {firstName} 👋</h1>
+          <h1>Bonjour {firstName}</h1>
           <span className="grade-badge" data-grade={grade.key}>
-            <span className="gb-emoji">{grade.emoji}</span>
+            <span className="gb-emoji"><Icon name={grade.icon} /></span>
             <span className="gb-name">{grade.name}</span>
             <span className="gb-pts">{points.toLocaleString('fr-FR')} pts</span>
           </span>
@@ -58,17 +59,17 @@ export default function DashboardShell({
           <div className="loyalty-panel">
             <div className="lp-hero">
               <div className="lp-points">
-                <span className="lp-coin">🪙</span>
+                <span className="lp-coin"><Icon name="coins" /></span>
                 <div><b>{points.toLocaleString('fr-FR')}</b><span>points Wash&amp;eat</span></div>
               </div>
               <div className="lp-grade">
-                <span className="lp-grade-badge">{grade.emoji} {grade.name}</span>
+                <span className="lp-grade-badge"><Icon name={grade.icon} /> {grade.name}</span>
                 {next ? (
                   <>
                     <div className="lp-bar"><i style={{ width: `${pct}%` }} /></div>
-                    <span className="lp-next">{(next.min - points).toLocaleString('fr-FR')} pts avant {next.emoji} {next.name}</span>
+                    <span className="lp-next">{(next.min - points).toLocaleString('fr-FR')} pts avant <Icon name={next.icon} className="lp-inline-ic" /> {next.name}</span>
                   </>
-                ) : <span className="lp-next">Grade maximum atteint 🎉</span>}
+                ) : <span className="lp-next">Grade maximum atteint</span>}
               </div>
             </div>
             <div className="lp-perks">

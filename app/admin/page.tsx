@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getCurrentUser } from '@/lib/auth';
 import { sql, type FranchiseLead } from '@/lib/db';
+import Icon from '@/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,7 +32,7 @@ export default async function AdminPage() {
             <h1>Candidatures franchise</h1>
             <p className="admin-sub">{leads.length} candidature{leads.length > 1 ? 's' : ''} reçue{leads.length > 1 ? 's' : ''}.</p>
           </div>
-          <span className="admin-badge">🔑 Admin - {user.first_name}</span>
+          <span className="admin-badge"><Icon name="key" className="admin-badge-ic" /> Admin - {user.first_name}</span>
         </div>
 
         {leads.length === 0 ? (

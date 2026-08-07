@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import SubNav from '@/components/SubNav';
 import SubFooter from '@/components/SubFooter';
 import CopyBlock from '@/components/CopyBlock';
+import Icon from '@/components/Icon';
 
 export const metadata: Metadata = {
   title: 'Presse · Wash&eat',
@@ -34,7 +35,7 @@ export default function PressePage() {
         <section className="page-hero page-hero--amber">
           <span className="blob pb1" /><span className="blob pb2" />
           <div className="container">
-            <span className="eyebrow" style={{ color: 'var(--amber)' }}>📰 Espace presse</span>
+            <span className="eyebrow" style={{ color: 'var(--amber)' }}><Icon name="newspaper" /> Espace presse</span>
             <h1>Kit presse Wash&amp;eat</h1>
             <p className="page-lead">Tout ce qu’il faut pour parler de nous : logo, couleurs, photos, chiffres clés et texte de présentation. Une demande spécifique ? Écrivez à <a href="mailto:presse@washeat.fr">presse@washeat.fr</a>.</p>
           </div>

@@ -58,7 +58,7 @@ export default function LoginPage() {
 
       <section className="auth-main">
         <div className="auth-panel">
-          <h1>Bon retour 👋</h1>
+          <h1>Bon retour</h1>
           <p className="auth-sub">Connectez-vous à votre compte Wash&amp;eat.</p>
 
           {error && <div className="auth-error">{error}</div>}

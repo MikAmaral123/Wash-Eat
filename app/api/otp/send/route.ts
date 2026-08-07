@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { sql } from '@/lib/db';
-import { normalizePhone, getCurrentUser } from '@/lib/auth';
+import { normalizePhone } from '@/lib/auth';
+import { authUser } from '@/lib/auth-request';
 import { issueCode, isDevSms } from '@/lib/otp';
 
 const schema = z.object({
@@ -28,7 +29,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Ce numéro est déjà utilisé.' }, { status: 409 });
   }
   if (purpose === 'change') {
-    const user = await getCurrentUser();
+    const user = await authUser(req);
     if (!user) return NextResponse.json({ error: 'Non connecté' }, { status: 401 });
     if (taken.length) return NextResponse.json({ error: 'Ce numéro est déjà utilisé.' }, { status: 409 });
   }

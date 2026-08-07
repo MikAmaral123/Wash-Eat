@@ -38,7 +38,7 @@ export default function FranchiseForm() {
     return (
       <div className="form-success">
         <div className="fs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg></div>
-        <h3>Candidature envoyée 🎉</h3>
+        <h3>Candidature envoyée</h3>
         <p>Merci {f.fullName.split(' ')[0]} ! Notre équipe franchise vous recontacte sous 48h à {f.email}.</p>
       </div>
     );

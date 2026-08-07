@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import SubNav from '@/components/SubNav';
 import SubFooter from '@/components/SubFooter';
 import FranchiseForm from '@/components/FranchiseForm';
+import Icon from '@/components/Icon';
 
 export const metadata: Metadata = {
   title: 'Nous rejoindre · Devenir franchisé Wash&eat',
@@ -19,7 +20,7 @@ const STEPS = [
   { n: '01', title: 'Prise de contact', body: 'Vous remplissez le formulaire, on échange sur votre projet et votre zone.' },
   { n: '02', title: 'Étude & local', body: 'On valide ensemble l’emplacement, le budget et le potentiel du secteur.' },
   { n: '03', title: 'Aménagement & formation', body: 'Installation des machines et du comptoir, formation à l’appli et au concept.' },
-  { n: '04', title: 'Ouverture 🎉', body: 'On lance votre laverie Wash&eat, avec un coup de pouce marketing pour démarrer fort.' },
+  { n: '04', title: 'Ouverture', body: 'On lance votre laverie Wash&eat, avec un coup de pouce marketing pour démarrer fort.' },
 ];
 
 export default function FranchisePage() {
@@ -30,7 +31,7 @@ export default function FranchisePage() {
         <section className="page-hero page-hero--coral">
           <span className="blob pb1" /><span className="blob pb2" />
           <div className="container">
-            <span className="eyebrow" style={{ color: 'var(--coral)' }}>🤝 Nous rejoindre</span>
+            <span className="eyebrow" style={{ color: 'var(--coral)' }}><Icon name="handshake" /> Nous rejoindre</span>
             <h1>Ouvrez votre laverie<br />nouvelle génération.</h1>
             <p className="page-lead">Wash&amp;eat réinvente la laverie de quartier : connectée, chaleureuse et éco-responsable. Devenez franchisé et portez ce concept dans votre ville, avec notre accompagnement complet.</p>
             <a href="#candidature" className="btn btn-primary">Déposer ma candidature</a>

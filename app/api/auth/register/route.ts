@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { sql } from '@/lib/db';
-import { hashPassword, createSession, normalizePhone } from '@/lib/auth';
+import { hashPassword, createSession, signSessionToken, normalizePhone } from '@/lib/auth';
 import { isVerified, consume } from '@/lib/otp';
 import { AVATARS } from '@/lib/avatars';
 import { WELCOME_BONUS } from '@/lib/loyalty';
@@ -47,5 +47,6 @@ export async function POST(req: Request) {
   await sql`insert into loyalty_ledger (user_id, delta, reason) values (${rows[0].id}, ${WELCOME_BONUS}, 'welcome')`;
   await consume(phone, 'signup');
   await createSession(rows[0].id);
-  return NextResponse.json({ ok: true });
+  const token = await signSessionToken(rows[0].id);
+  return NextResponse.json({ ok: true, token });
 }
