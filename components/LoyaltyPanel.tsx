@@ -1,12 +1,9 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { REWARDS, GRADES, EARN_RULES, gradeFor, nextGrade, gradeProgress } from '@/lib/loyalty';
 import Icon from '@/components/Icon';
 
-export default function LoyaltyPanel({ initialPoints }: { initialPoints: number }) {
-  const router = useRouter();
-  const [points, setPoints] = useState(initialPoints);
+export default function LoyaltyPanel({ points, onRedeem }: { points: number; onRedeem?: (newPoints: number) => void }) {
   const [busy, setBusy] = useState<string | null>(null);
   const [flash, setFlash] = useState<{ type: 'ok' | 'err'; msg: string } | null>(null);
 
@@ -24,9 +21,8 @@ export default function LoyaltyPanel({ initialPoints }: { initialPoints: number 
       });
       const d = await res.json();
       if (!res.ok) { setFlash({ type: 'err', msg: d.error || 'Échec.' }); return; }
-      setPoints(d.points);
+      onRedeem?.(d.points);
       setFlash({ type: 'ok', msg: `${name} échangé ! Votre coupon vous attend dans l’onglet Aperçu.` });
-      router.refresh();
     } catch { setFlash({ type: 'err', msg: 'Erreur réseau.' }); }
     finally { setBusy(null); }
   }

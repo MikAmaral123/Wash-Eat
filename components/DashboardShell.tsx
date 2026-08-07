@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import AccountAvatar from '@/components/AccountAvatar';
 import ProfileSettings from '@/components/ProfileSettings';
 import LoyaltyPanel from '@/components/LoyaltyPanel';
@@ -15,12 +15,32 @@ const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
   { key: 'profil', label: 'Profil', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg> },
 ];
 
+// Live points: poll the server so the balance/grade update without a reload.
+function useLivePoints(initial: number) {
+  const [points, setPoints] = useState(initial);
+  const refresh = useCallback(async () => {
+    try {
+      const res = await fetch('/api/account/points', { cache: 'no-store' });
+      if (res.ok) { const d = await res.json(); if (typeof d.points === 'number') setPoints(d.points); }
+    } catch { /* keep last */ }
+  }, []);
+  useEffect(() => {
+    refresh();
+    const t = setInterval(refresh, 4000);
+    const onFocus = () => refresh();
+    window.addEventListener('focus', onFocus);
+    return () => { clearInterval(t); window.removeEventListener('focus', onFocus); };
+  }, [refresh]);
+  return { points, refresh, setPoints };
+}
+
 export default function DashboardShell({
-  firstName, phone, birthdate, avatarId, points, isAdmin,
+  firstName, phone, birthdate, avatarId, points: initialPoints, isAdmin,
 }: {
   firstName: string; phone: string; birthdate: string | null; avatarId: string | null; points: number; isAdmin?: boolean;
 }) {
   const [tab, setTab] = useState<Tab>('apercu');
+  const { points, refresh: refreshPoints, setPoints } = useLivePoints(initialPoints);
 
   const grade = gradeFor(points);
   const next = nextGrade(points);
@@ -81,7 +101,12 @@ export default function DashboardShell({
           </div>
         )}
 
-        {tab === 'fidelite' && <LoyaltyPanel initialPoints={points} />}
+        {tab === 'fidelite' && (
+          <LoyaltyPanel
+            points={points}
+            onRedeem={(newPoints) => { setPoints(newPoints); refreshPoints(); }}
+          />
+        )}
 
         {tab === 'profil' && <ProfileSettings firstName={firstName} phone={phone} birthdate={birthdate} />}
       </div>
