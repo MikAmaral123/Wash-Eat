@@ -1,6 +1,8 @@
 import { randomUUID } from 'crypto';
 import { sql } from './db';
 
+export const COUPON_TTL_DAYS = 14;
+
 export type Coupon = {
   id: string;
   reward_key: string;
@@ -9,6 +11,7 @@ export type Coupon = {
   code: string;
   status: string;
   created_at: string;
+  expires_at: string | null;
 };
 
 // Idempotent provisioning — no migration tooling in this project, so the table
@@ -26,8 +29,11 @@ export async function ensureCouponsTable(): Promise<void> {
       code text not null unique,
       status text not null default 'active',
       created_at timestamptz not null default now(),
-      used_at timestamptz
+      used_at timestamptz,
+      expires_at timestamptz
     )`;
+  // Idempotent for tables created before expiry existed.
+  await sql`alter table coupons add column if not exists expires_at timestamptz`;
   ensured = true;
 }
 

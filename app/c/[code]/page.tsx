@@ -9,8 +9,9 @@ export default async function CouponScanPage({ params }: { params: Promise<{ cod
   const { code } = await params;
   await ensureCouponsTable();
   const rows = (await sql`
-    select reward_name, status from coupons where code = ${code} limit 1
-  `) as { reward_name: string; status: string }[];
+    select reward_name, status, (expires_at is not null and expires_at <= now()) as expired
+    from coupons where code = ${code} limit 1
+  `) as { reward_name: string; status: string; expired: boolean }[];
   const coupon = rows[0];
 
   return (
@@ -28,6 +29,12 @@ export default async function CouponScanPage({ params }: { params: Promise<{ cod
             <Icon name="check" className="scan-ic" />
             <h1>Déjà utilisé</h1>
             <p>Ce coupon a déjà été validé.</p>
+          </div>
+        ) : coupon.expired ? (
+          <div className="scan-state err">
+            <Icon name="check" className="scan-ic" />
+            <h1>Coupon expiré</h1>
+            <p>Ce coupon a dépassé ses 2 semaines de validité.</p>
           </div>
         ) : (
           <CouponValidate code={code} rewardName={coupon.reward_name} />

@@ -21,10 +21,17 @@ export async function POST(req: Request) {
   const rows = (await sql`
     update coupons set status = 'used', used_at = now()
     where code = ${parsed.data.code} and status = 'active'
+      and (expires_at is null or expires_at > now())
     returning reward_name
   `) as { reward_name: string }[];
 
   if (!rows.length) {
+    // Distinguish an expired coupon for a clearer terminal message.
+    const exp = (await sql`
+      select 1 from coupons
+      where code = ${parsed.data.code} and status = 'active' and expires_at <= now() limit 1
+    `) as unknown[];
+    if (exp.length) return NextResponse.json({ error: 'Coupon expiré.' }, { status: 410 });
     return NextResponse.json({ error: 'Coupon introuvable ou déjà utilisé.' }, { status: 404 });
   }
 

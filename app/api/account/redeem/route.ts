@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { sql } from '@/lib/db';
 import { authUser } from '@/lib/auth-request';
 import { REWARDS, rewardByKey } from '@/lib/loyalty';
-import { ensureCouponsTable, genCode } from '@/lib/coupons';
+import { ensureCouponsTable, genCode, COUPON_TTL_DAYS } from '@/lib/coupons';
 
 const schema = z.object({ rewardKey: z.enum(REWARDS.map((r) => r.key) as [string, ...string[]]) });
 
@@ -39,8 +39,13 @@ export async function POST(req: Request) {
   // Emit a single-use coupon to redeem at the in-store terminal.
   await ensureCouponsTable();
   const code = genCode();
-  await sql`insert into coupons (user_id, reward_key, reward_name, cost, code)
-            values (${user.id}, ${reward.key}, ${reward.name}, ${reward.cost}, ${code})`;
+  const inserted = (await sql`
+    insert into coupons (user_id, reward_key, reward_name, cost, code, expires_at)
+    values (${user.id}, ${reward.key}, ${reward.name}, ${reward.cost}, ${code}, now() + make_interval(days => ${COUPON_TTL_DAYS}))
+    returning expires_at`) as { expires_at: string }[];
 
-  return NextResponse.json({ ok: true, points: rows[0].points, coupon: { code, reward_name: reward.name } });
+  return NextResponse.json({
+    ok: true, points: rows[0].points,
+    coupon: { code, reward_name: reward.name, expires_at: inserted[0]?.expires_at },
+  });
 }

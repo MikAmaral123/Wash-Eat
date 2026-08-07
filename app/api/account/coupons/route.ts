@@ -11,9 +11,10 @@ export async function GET(req: Request) {
 
   await ensureCouponsTable();
   const coupons = (await sql`
-    select id, reward_key, reward_name, cost, code, status, created_at
+    select id, reward_key, reward_name, cost, code, status, created_at, expires_at
     from coupons
     where user_id = ${user.id} and status = 'active'
+      and (expires_at is null or expires_at > now())
     order by created_at desc
   `) as Coupon[];
 
