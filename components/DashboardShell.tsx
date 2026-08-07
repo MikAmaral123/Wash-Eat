@@ -1,0 +1,90 @@
+'use client';
+import { useState } from 'react';
+import AccountAvatar from '@/components/AccountAvatar';
+import ProfileSettings from '@/components/ProfileSettings';
+import LoyaltyPanel from '@/components/LoyaltyPanel';
+import { gradeFor, nextGrade, gradeProgress } from '@/lib/loyalty';
+
+type Tab = 'apercu' | 'fidelite' | 'profil';
+
+const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
+  { key: 'apercu', label: 'Aperçu', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /></svg> },
+  { key: 'fidelite', label: 'Fidélité', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="6" /><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5" /></svg> },
+  { key: 'profil', label: 'Profil', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg> },
+];
+
+export default function DashboardShell({
+  firstName, phone, birthdate, avatarId, points,
+}: {
+  firstName: string; phone: string; birthdate: string | null; avatarId: string | null; points: number;
+}) {
+  const [tab, setTab] = useState<Tab>('apercu');
+
+  const grade = gradeFor(points);
+  const next = nextGrade(points);
+  const pct = Math.round(gradeProgress(points) * 100);
+
+  return (
+    <>
+      <header className="dash-head">
+        <AccountAvatar initialAvatarId={avatarId} />
+        <div className="dash-head-info">
+          <h1>Bonjour {firstName} 👋</h1>
+          <p className="dash-phone">{phone}</p>
+        </div>
+        <span className="dash-grade-chip">{grade.emoji} {grade.name} · {points.toLocaleString('fr-FR')} pts</span>
+      </header>
+
+      <nav className="dash-tabs" role="tablist">
+        {TABS.map((t) => (
+          <button key={t.key} type="button" role="tab" aria-selected={tab === t.key}
+            className={'dash-tab' + (tab === t.key ? ' active' : '')} onClick={() => setTab(t.key)}>
+            {t.icon}<span>{t.label}</span>
+          </button>
+        ))}
+      </nav>
+
+      <div className="dash-panel">
+        {tab === 'apercu' && (
+          <div className="loyalty-panel">
+            <div className="lp-hero">
+              <div className="lp-points">
+                <span className="lp-coin">🪙</span>
+                <div><b>{points.toLocaleString('fr-FR')}</b><span>points Wash&amp;eat</span></div>
+              </div>
+              <div className="lp-grade">
+                <span className="lp-grade-badge">{grade.emoji} {grade.name}</span>
+                {next ? (
+                  <>
+                    <div className="lp-bar"><i style={{ width: `${pct}%` }} /></div>
+                    <span className="lp-next">{(next.min - points).toLocaleString('fr-FR')} pts avant {next.emoji} {next.name}</span>
+                  </>
+                ) : <span className="lp-next">Grade maximum atteint 🎉</span>}
+              </div>
+            </div>
+            <div className="lp-perks">
+              <div><span className="lp-perk-lbl">Avantage</span><p>{grade.perk}</p></div>
+              <div><span className="lp-perk-lbl">Débloqué</span><p>{grade.unlock}</p></div>
+            </div>
+            <div className="dash-quick">
+              <button type="button" className="dash-quick-btn" onClick={() => setTab('fidelite')}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8h18M3 8l2-4h14l2 4M3 8v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8M9 12h6" /></svg>
+                <span>Boutique de points</span>
+                <svg className="q-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+              </button>
+              <button type="button" className="dash-quick-btn" onClick={() => setTab('profil')}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
+                <span>Modifier mon profil</span>
+                <svg className="q-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {tab === 'fidelite' && <LoyaltyPanel initialPoints={points} />}
+
+        {tab === 'profil' && <ProfileSettings firstName={firstName} phone={phone} birthdate={birthdate} />}
+      </div>
+    </>
+  );
+}

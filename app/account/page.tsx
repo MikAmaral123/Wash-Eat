@@ -1,9 +1,7 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getCurrentUser, maybeGrantBirthday } from '@/lib/auth';
-import AccountAvatar from '@/components/AccountAvatar';
-import ProfileSettings from '@/components/ProfileSettings';
-import LoyaltyPanel from '@/components/LoyaltyPanel';
+import DashboardShell from '@/components/DashboardShell';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,17 +26,13 @@ export default async function AccountPage() {
       </div>
 
       <div className="dash-inner">
-        <header className="dash-hero">
-          <AccountAvatar initialAvatarId={user.avatar_id} />
-          <div>
-            <h1>Bonjour {user.first_name} 👋</h1>
-            <p className="dash-phone">{user.phone}</p>
-          </div>
-        </header>
-
-        <LoyaltyPanel initialPoints={user.points} />
-
-        <ProfileSettings firstName={user.first_name ?? ''} phone={user.phone} birthdate={user.birthdate} />
+        <DashboardShell
+          firstName={user.first_name ?? ''}
+          phone={user.phone}
+          birthdate={user.birthdate}
+          avatarId={user.avatar_id}
+          points={user.points}
+        />
       </div>
     </main>
   );
