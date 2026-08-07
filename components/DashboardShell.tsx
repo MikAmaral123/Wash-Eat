@@ -72,18 +72,6 @@ export default function DashboardShell({
               <div><span className="lp-perk-lbl">Avantage</span><p>{grade.perk}</p></div>
               <div><span className="lp-perk-lbl">Débloqué</span><p>{grade.unlock}</p></div>
             </div>
-            <div className="dash-quick">
-              <button type="button" className="dash-quick-btn" onClick={() => setTab('fidelite')}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8h18M3 8l2-4h14l2 4M3 8v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8M9 12h6" /></svg>
-                <span>Boutique de points</span>
-                <svg className="q-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-              </button>
-              <button type="button" className="dash-quick-btn" onClick={() => setTab('profil')}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
-                <span>Modifier mon profil</span>
-                <svg className="q-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-              </button>
-            </div>
           </div>
         )}
 
