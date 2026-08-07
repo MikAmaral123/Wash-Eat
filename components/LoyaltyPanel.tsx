@@ -25,7 +25,7 @@ export default function LoyaltyPanel({ initialPoints }: { initialPoints: number 
       const d = await res.json();
       if (!res.ok) { setFlash({ type: 'err', msg: d.error || 'Échec.' }); return; }
       setPoints(d.points);
-      setFlash({ type: 'ok', msg: `${name} débloqué ! À présenter au comptoir.` });
+      setFlash({ type: 'ok', msg: `${name} échangé ! Votre coupon vous attend dans l’onglet Aperçu.` });
       router.refresh();
     } catch { setFlash({ type: 'err', msg: 'Erreur réseau.' }); }
     finally { setBusy(null); }

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import AccountAvatar from '@/components/AccountAvatar';
 import ProfileSettings from '@/components/ProfileSettings';
 import LoyaltyPanel from '@/components/LoyaltyPanel';
+import CouponsPanel from '@/components/CouponsPanel';
 import Icon from '@/components/Icon';
 import { gradeFor, nextGrade, gradeProgress } from '@/lib/loyalty';
 
@@ -57,6 +58,7 @@ export default function DashboardShell({
       <div className="dash-panel">
         {tab === 'apercu' && (
           <div className="loyalty-panel">
+            <CouponsPanel />
             <div className="lp-hero">
               <div className="lp-points">
                 <span className="lp-coin"><Icon name="coins" /></span>
