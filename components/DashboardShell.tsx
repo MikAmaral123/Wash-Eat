@@ -30,9 +30,12 @@ export default function DashboardShell({
         <AccountAvatar initialAvatarId={avatarId} />
         <div className="dash-head-info">
           <h1>Bonjour {firstName} 👋</h1>
-          <p className="dash-phone">{phone}</p>
+          <span className="grade-badge" data-grade={grade.key}>
+            <span className="gb-emoji">{grade.emoji}</span>
+            <span className="gb-name">{grade.name}</span>
+            <span className="gb-pts">{points.toLocaleString('fr-FR')} pts</span>
+          </span>
         </div>
-        <span className="dash-grade-chip">{grade.emoji} {grade.name} · {points.toLocaleString('fr-FR')} pts</span>
       </header>
 
       <nav className="dash-tabs" role="tablist">

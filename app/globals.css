@@ -245,6 +245,34 @@
 .dash-head-info { flex: 1 1 auto; min-width: 0; }
 .dash-head-info h1 { font-family: var(--font-display); font-size: 26px; font-weight: 700; }
 .dash-grade-chip { flex: 0 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; font-weight: 700; font-size: 13.5px; box-shadow: var(--shadow-sm); }
+
+/* Grade badge (effets croissants par grade) */
+.grade-badge { position: relative; display: inline-flex; align-items: center; gap: 7px; margin-top: 8px; padding: 6px 13px; border-radius: 999px; font-weight: 800; font-size: 13px; letter-spacing: .2px; overflow: hidden; isolation: isolate; }
+.grade-badge > * { position: relative; z-index: 2; }
+.gb-emoji { font-size: 15px; line-height: 1; }
+.gb-pts { font-weight: 700; font-size: 11px; opacity: .9; padding-left: 8px; margin-left: 1px; border-left: 1px solid currentColor; }
+.grade-badge::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,.65) 50%, transparent 65%); transform: translateX(-130%); }
+
+/* Snacker — sobre */
+.grade-badge[data-grade="snacker"] { background: var(--paper-2); color: var(--ink); border: 1px solid var(--line); }
+.grade-badge[data-grade="snacker"] .gb-pts { border-left-color: var(--line); color: var(--ink-2); }
+
+/* Gourmet — dégradé doux + halo */
+.grade-badge[data-grade="gourmet"] { color: #4a3410; background: linear-gradient(135deg, #ffe6a8, #ffcf76); box-shadow: 0 4px 14px rgba(240,180,60,.35); }
+.grade-badge[data-grade="gourmet"]::after { animation: gbSweep 4s ease-in-out infinite; }
+
+/* Chef — dégradé coral + relief */
+.grade-badge[data-grade="chef"] { color: #fff; background: linear-gradient(135deg, #ff7a3d, #f5502b); box-shadow: 0 6px 18px rgba(245,80,43,.42), inset 0 1px 0 rgba(255,255,255,.35); }
+.grade-badge[data-grade="chef"]::after { animation: gbSweep 3.2s ease-in-out infinite; }
+
+/* Foodie VIP — or animé + glow pulsé */
+.grade-badge[data-grade="vip"] { color: #4a2f00; background: linear-gradient(120deg, #ffe9a8, #ffcf5a, #fff6d6, #ffcf5a, #ffe9a8); background-size: 250% 100%; box-shadow: 0 0 0 1px rgba(255,206,90,.7), 0 8px 24px rgba(255,190,60,.55); animation: gbGold 4s linear infinite, gbPulse 2.6s ease-in-out infinite; }
+.grade-badge[data-grade="vip"]::after { animation: gbSweep 2.4s ease-in-out infinite; }
+
+@keyframes gbSweep { 0%, 55% { transform: translateX(-130%); } 100% { transform: translateX(130%); } }
+@keyframes gbGold { to { background-position: -250% 0; } }
+@keyframes gbPulse { 0%, 100% { box-shadow: 0 0 0 1px rgba(255,206,90,.7), 0 8px 24px rgba(255,190,60,.45); } 50% { box-shadow: 0 0 0 1px rgba(255,206,90,.9), 0 10px 30px rgba(255,190,60,.75); } }
+@media (prefers-reduced-motion: reduce) { .grade-badge, .grade-badge::after { animation: none !important; } }
 .dash-tabs { display: flex; gap: 6px; background: var(--paper-2); border: 1px solid var(--line); border-radius: 999px; padding: 5px; margin-bottom: 26px; overflow-x: auto; }
 .dash-tab { flex: 1 1 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; padding: 11px 16px; border: none; background: transparent; border-radius: 999px; font-family: var(--font-body); font-weight: 700; font-size: 14.5px; color: var(--ink-2); cursor: pointer; text-decoration: none; transition: background .15s, color .15s; }
 .dash-tab svg { width: 17px; height: 17px; }
