@@ -246,10 +246,13 @@
 .dash-head-info h1 { font-family: var(--font-display); font-size: 26px; font-weight: 700; }
 .dash-grade-chip { flex: 0 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; font-weight: 700; font-size: 13.5px; box-shadow: var(--shadow-sm); }
 .dash-tabs { display: flex; gap: 6px; background: var(--paper-2); border: 1px solid var(--line); border-radius: 999px; padding: 5px; margin-bottom: 26px; overflow-x: auto; }
-.dash-tab { flex: 1 1 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; padding: 11px 16px; border-radius: 999px; font-family: var(--font-body); font-weight: 700; font-size: 14.5px; color: var(--ink-2); cursor: pointer; transition: background .15s, color .15s; }
+.dash-tab { flex: 1 1 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; padding: 11px 16px; border: none; background: transparent; border-radius: 999px; font-family: var(--font-body); font-weight: 700; font-size: 14.5px; color: var(--ink-2); cursor: pointer; text-decoration: none; transition: background .15s, color .15s; }
 .dash-tab svg { width: 17px; height: 17px; }
-.dash-tab:hover { color: var(--ink); }
-.dash-tab.active { background: var(--coral); color: #fff; box-shadow: var(--shadow-sm); }
+.dash-tab:hover { color: var(--ink); background: rgba(42,33,26,.05); }
+.dash-tab.active { background: var(--coral); color: #fff; box-shadow: 0 2px 8px rgba(245,80,43,.35); }
+.dash-tab.active:hover { background: var(--coral); }
+.dash-tab-admin { color: var(--coral); }
+.dash-tab-admin:hover { background: var(--coral-soft); color: var(--coral); }
 .dash-panel { animation: fadeUp .25s ease; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .dash-quick { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }

@@ -14,9 +14,9 @@ const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
 ];
 
 export default function DashboardShell({
-  firstName, phone, birthdate, avatarId, points,
+  firstName, phone, birthdate, avatarId, points, isAdmin,
 }: {
-  firstName: string; phone: string; birthdate: string | null; avatarId: string | null; points: number;
+  firstName: string; phone: string; birthdate: string | null; avatarId: string | null; points: number; isAdmin?: boolean;
 }) {
   const [tab, setTab] = useState<Tab>('apercu');
 
@@ -42,6 +42,12 @@ export default function DashboardShell({
             {t.icon}<span>{t.label}</span>
           </button>
         ))}
+        {isAdmin && (
+          <a href="/admin" className="dash-tab dash-tab-admin">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" /><path d="m9 12 2 2 4-4" /></svg>
+            <span>Admin</span>
+          </a>
+        )}
       </nav>
 
       <div className="dash-panel">

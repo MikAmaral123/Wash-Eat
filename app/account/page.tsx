@@ -16,8 +16,6 @@ export default async function AccountPage() {
         <div className="dash-topbar-inner">
           <Link href="/" className="brand"><span className="porthole" />Wash<span className="amp">&amp;</span>eat</Link>
           <div className="dash-topbar-actions">
-            {user.is_admin && <Link href="/admin" className="btn btn-ghost btn-sm">🔑 Admin</Link>}
-            <Link href="/" className="btn btn-ghost btn-sm">Retour au site</Link>
             <form action="/api/auth/logout" method="post">
               <button className="btn btn-primary btn-sm" type="submit">Se déconnecter</button>
             </form>
@@ -32,6 +30,7 @@ export default async function AccountPage() {
           birthdate={user.birthdate}
           avatarId={user.avatar_id}
           points={user.points}
+          isAdmin={user.is_admin}
         />
       </div>
     </main>
