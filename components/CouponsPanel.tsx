@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import QRCode from 'qrcode';
 import Icon from '@/components/Icon';
 import { rewardByKey } from '@/lib/loyalty';
@@ -51,6 +51,9 @@ export default function CouponsPanel() {
 function CouponCard({ c }: { c: Coupon }) {
   const [qr, setQr] = useState('');
   const [shared, setShared] = useState(false);
+  const [marquee, setMarquee] = useState<{ shift: number; dur: number } | null>(null);
+  const nameWrap = useRef<HTMLDivElement>(null);
+  const nameTxt = useRef<HTMLSpanElement>(null);
   const icon = rewardByKey(c.reward_key)?.icon ?? 'gift';
 
   useEffect(() => {
@@ -58,6 +61,19 @@ function CouponCard({ c }: { c: Coupon }) {
     QRCode.toDataURL(url, { width: 240, margin: 1, color: { dark: '#2a211a', light: '#ffffff' } })
       .then(setQr).catch(() => setQr(''));
   }, [c.code]);
+
+  // Enable auto horizontal scroll only when the name overflows its box.
+  useEffect(() => {
+    const measure = () => {
+      const w = nameWrap.current, t = nameTxt.current;
+      if (!w || !t) return;
+      const over = t.scrollWidth - w.clientWidth;
+      setMarquee(over > 4 ? { shift: over + 6, dur: Math.max(3, (over + 6) / 25) } : null);
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [c.reward_name]);
 
   async function share() {
     const url = `${window.location.origin}/c/${c.code}`;
@@ -76,8 +92,13 @@ function CouponCard({ c }: { c: Coupon }) {
       <div className="coupon-head">
         <span className="coupon-icon"><Icon name={icon} /></span>
         <div className="coupon-meta">
-          <b>{c.reward_name}</b>
-          <span>{c.cost} pts · usage unique</span>
+          <div className={'coupon-name' + (marquee ? ' marquee' : '')} ref={nameWrap}>
+            <span
+              className="coupon-name-txt" ref={nameTxt}
+              style={marquee ? { ['--shift' as string]: `-${marquee.shift}px`, ['--dur' as string]: `${marquee.dur}s` } : undefined}
+            >{c.reward_name}</span>
+          </div>
+          <span className="coupon-sub">{c.cost} pts · usage unique</span>
         </div>
       </div>
       <div className="coupon-qr-wrap">
