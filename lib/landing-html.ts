@@ -33,7 +33,11 @@ export const landingHtml = `
   <a href="#comment" data-i18n="nav.how">Comment ça marche</a>
   <a href="#fidelite" data-i18n="nav.rewards">Fidélité</a>
   <a href="#comptoir" data-i18n="nav.counter">Le comptoir</a>
-  <a href="/signup" data-i18n="drawer.download">Télécharger l'appli</a>
+  <a href="/login" class="drawer-login" data-i18n="nav.login">Se connecter</a>
+  <a href="/signup" class="drawer-cta btn btn-primary" data-i18n="drawer.download">Télécharger l'appli</a>
+  <button class="lang-toggle" aria-label="Langue / Language">
+    <span class="lt-opt active" data-lang="fr">FR</span><span class="lt-opt" data-lang="en">EN</span>
+  </button>
 </nav>
 
 <!-- HERO -->

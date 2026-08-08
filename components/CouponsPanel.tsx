@@ -4,7 +4,7 @@ import QRCode from 'qrcode';
 import Icon from '@/components/Icon';
 import { rewardByKey } from '@/lib/loyalty';
 
-type Coupon = { id: string; reward_key: string; reward_name: string; cost: number; code: string; expires_at: string | null };
+export type Coupon = { id: string; reward_key: string; reward_name: string; cost: number; code: string; status?: string; created_at?: string; expires_at: string | null };
 
 function expiryLabel(iso: string | null): string {
   if (!iso) return 'Sans expiration';
@@ -15,24 +15,9 @@ function expiryLabel(iso: string | null): string {
   return `Expire dans ${days} jours`;
 }
 
-export default function CouponsPanel() {
-  const [coupons, setCoupons] = useState<Coupon[] | null>(null);
-
-  async function load() {
-    try {
-      const res = await fetch('/api/account/coupons', { cache: 'no-store' });
-      if (res.ok) { const d = await res.json(); setCoupons(d.coupons ?? []); }
-    } catch { /* keep last */ }
-  }
-
-  useEffect(() => {
-    load();
-    const t = setInterval(load, 5000); // reflect terminal validation quickly
-    const onFocus = () => load();
-    window.addEventListener('focus', onFocus);
-    return () => { clearInterval(t); window.removeEventListener('focus', onFocus); };
-  }, []);
-
+// Presentational: coupons are owned/polled by DashboardShell so the list stays
+// live across tab switches and reflects redemptions optimistically.
+export default function CouponsPanel({ coupons }: { coupons: Coupon[] | null }) {
   if (!coupons || coupons.length === 0) return null;
 
   return (

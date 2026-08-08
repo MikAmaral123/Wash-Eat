@@ -42,10 +42,21 @@ export async function POST(req: Request) {
   const inserted = (await sql`
     insert into coupons (user_id, reward_key, reward_name, cost, code, expires_at)
     values (${user.id}, ${reward.key}, ${reward.name}, ${reward.cost}, ${code}, now() + make_interval(days => ${COUPON_TTL_DAYS}))
-    returning expires_at`) as { expires_at: string }[];
+    returning id, status, created_at, expires_at`) as { id: string; status: string; created_at: string; expires_at: string }[];
 
+  // Return the full coupon so the client can render it optimistically
+  // (no wait for the next poll).
   return NextResponse.json({
     ok: true, points: rows[0].points,
-    coupon: { code, reward_name: reward.name, expires_at: inserted[0]?.expires_at },
+    coupon: {
+      id: inserted[0]?.id,
+      reward_key: reward.key,
+      reward_name: reward.name,
+      cost: reward.cost,
+      code,
+      status: inserted[0]?.status ?? 'active',
+      created_at: inserted[0]?.created_at,
+      expires_at: inserted[0]?.expires_at,
+    },
   });
 }

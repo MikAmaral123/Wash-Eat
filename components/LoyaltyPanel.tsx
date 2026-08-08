@@ -2,8 +2,9 @@
 import { useState } from 'react';
 import { REWARDS, GRADES, EARN_RULES, gradeFor, nextGrade, gradeProgress } from '@/lib/loyalty';
 import Icon from '@/components/Icon';
+import { type Coupon } from '@/components/CouponsPanel';
 
-export default function LoyaltyPanel({ points, onRedeem }: { points: number; onRedeem?: (newPoints: number) => void }) {
+export default function LoyaltyPanel({ points, onRedeem }: { points: number; onRedeem?: (newPoints: number, coupon?: Coupon) => void }) {
   const [busy, setBusy] = useState<string | null>(null);
   const [flash, setFlash] = useState<{ type: 'ok' | 'err'; msg: string } | null>(null);
 
@@ -21,7 +22,7 @@ export default function LoyaltyPanel({ points, onRedeem }: { points: number; onR
       });
       const d = await res.json();
       if (!res.ok) { setFlash({ type: 'err', msg: d.error || 'Échec.' }); return; }
-      onRedeem?.(d.points);
+      onRedeem?.(d.points, d.coupon);
       setFlash({ type: 'ok', msg: `${name} échangé ! Votre coupon vous attend dans l’onglet Aperçu.` });
     } catch { setFlash({ type: 'err', msg: 'Erreur réseau.' }); }
     finally { setBusy(null); }

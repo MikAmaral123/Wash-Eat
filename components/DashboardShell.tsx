@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import AccountAvatar from '@/components/AccountAvatar';
 import ProfileSettings from '@/components/ProfileSettings';
 import LoyaltyPanel from '@/components/LoyaltyPanel';
-import CouponsPanel from '@/components/CouponsPanel';
+import CouponsPanel, { type Coupon } from '@/components/CouponsPanel';
 import Icon from '@/components/Icon';
 import { gradeFor, nextGrade, gradeProgress } from '@/lib/loyalty';
 
@@ -15,23 +15,51 @@ const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
   { key: 'profil', label: 'Profil', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg> },
 ];
 
-// Live points: poll the server so the balance/grade update without a reload.
-function useLivePoints(initial: number) {
-  const [points, setPoints] = useState(initial);
+const POLL_MS = 3000;
+
+// Live account: poll points + coupons together so the balance, grade and the
+// coupon list update without a reload — and reflect changes made elsewhere
+// (in-store terminal validation) within one poll. Redemptions are applied
+// optimistically on top so the user's own actions feel instant.
+function useLiveAccount(initialPoints: number) {
+  const [points, setPoints] = useState(initialPoints);
+  const [coupons, setCoupons] = useState<Coupon[] | null>(null);
+
   const refresh = useCallback(async () => {
     try {
-      const res = await fetch('/api/account/points', { cache: 'no-store' });
-      if (res.ok) { const d = await res.json(); if (typeof d.points === 'number') setPoints(d.points); }
-    } catch { /* keep last */ }
+      const [p, c] = await Promise.all([
+        fetch('/api/account/points', { cache: 'no-store' }),
+        fetch('/api/account/coupons', { cache: 'no-store' }),
+      ]);
+      if (p.ok) { const d = await p.json(); if (typeof d.points === 'number') setPoints(d.points); }
+      if (c.ok) { const d = await c.json(); setCoupons(d.coupons ?? []); }
+    } catch { /* keep last known values */ }
   }, []);
+
+  // Optimistically show a freshly redeemed coupon (dedupe against the poll).
+  const addCoupon = useCallback((coupon: Coupon | undefined) => {
+    if (!coupon?.id) return;
+    setCoupons((prev) => {
+      const list = prev ?? [];
+      if (list.some((x) => x.id === coupon.id)) return list;
+      return [coupon, ...list];
+    });
+  }, []);
+
   useEffect(() => {
     refresh();
-    const t = setInterval(refresh, 4000);
-    const onFocus = () => refresh();
-    window.addEventListener('focus', onFocus);
-    return () => { clearInterval(t); window.removeEventListener('focus', onFocus); };
+    const t = setInterval(refresh, POLL_MS);
+    const onWake = () => { if (document.visibilityState === 'visible') refresh(); };
+    window.addEventListener('focus', onWake);
+    document.addEventListener('visibilitychange', onWake);
+    return () => {
+      clearInterval(t);
+      window.removeEventListener('focus', onWake);
+      document.removeEventListener('visibilitychange', onWake);
+    };
   }, [refresh]);
-  return { points, refresh, setPoints };
+
+  return { points, setPoints, coupons, addCoupon, refresh };
 }
 
 export default function DashboardShell({
@@ -40,7 +68,7 @@ export default function DashboardShell({
   firstName: string; phone: string; birthdate: string | null; avatarId: string | null; points: number; isAdmin?: boolean;
 }) {
   const [tab, setTab] = useState<Tab>('apercu');
-  const { points, refresh: refreshPoints, setPoints } = useLivePoints(initialPoints);
+  const { points, setPoints, coupons, addCoupon, refresh } = useLiveAccount(initialPoints);
 
   const grade = gradeFor(points);
   const next = nextGrade(points);
@@ -78,7 +106,7 @@ export default function DashboardShell({
       <div className="dash-panel">
         {tab === 'apercu' && (
           <div className="loyalty-panel">
-            <CouponsPanel />
+            <CouponsPanel coupons={coupons} />
             <div className="lp-hero">
               <div className="lp-points">
                 <span className="lp-coin"><Icon name="coins" /></span>
@@ -104,7 +132,7 @@ export default function DashboardShell({
         {tab === 'fidelite' && (
           <LoyaltyPanel
             points={points}
-            onRedeem={(newPoints) => { setPoints(newPoints); refreshPoints(); }}
+            onRedeem={(newPoints, coupon) => { setPoints(newPoints); addCoupon(coupon); refresh(); }}
           />
         )}
 
